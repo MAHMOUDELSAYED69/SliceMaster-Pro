@@ -7,6 +7,7 @@ abstract class ImageManager {
   static const String authBackground =
       'assets/images/delicious-pizza-indoors.jpg';
 
-  static const String splashBackground =
-      'assets/images/_6b55d472-b167-43d6-b59f-5f8fa5a6018e.jpeg';
+  static const String splashImage = 'assets/images/Pizza-slice 2.png';
+
+  static const String logo = 'assets/images/Logo.png';
 }

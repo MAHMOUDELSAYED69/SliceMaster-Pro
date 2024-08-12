@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
                 );
               },
               theme: AppTheme.lightTheme,
-              title: 'akadomen',
+              title: 'Slice Master Pro', 
               debugShowCheckedModeBanner: false,
               initialRoute: RouteManager.initialRoute,
               onGenerateRoute: AppRouter.onGenerateRoute,

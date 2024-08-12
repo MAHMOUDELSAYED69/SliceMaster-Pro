@@ -51,10 +51,10 @@ abstract class AppTheme {
       fontFamily: 'Poppins',
       useMaterial3: true,
       brightness: Brightness.light,
-      scaffoldBackgroundColor: ColorManager.orange,
+      scaffoldBackgroundColor: ColorManager.offWhite,
       appBarTheme: AppBarTheme(
         elevation: BorderSide.strokeAlignOutside,
-        backgroundColor: ColorManager.orange,
+        backgroundColor: ColorManager.offWhite,
         shadowColor: ColorManager.darkGrey,
         centerTitle: false,
         iconTheme: const IconThemeData(color: ColorManager.black),
