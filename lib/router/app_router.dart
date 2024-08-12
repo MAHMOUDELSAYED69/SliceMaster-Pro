@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../utils/constants/routes.dart';
+import '../view/screens/login.dart';
 import '../view/screens/splash.dart';
 import 'page_transition.dart';
 
@@ -12,6 +13,11 @@ abstract class AppRouter {
       case RouteManager.initialRoute:
         return PageTransitionManager.fadeTransition(
           const SplashScreen(),
+        );
+
+      case RouteManager.login:
+        return PageTransitionManager.fadeTransition(
+          const LoginScreen(),
         );
 
       default:

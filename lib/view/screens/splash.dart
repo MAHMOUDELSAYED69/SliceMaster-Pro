@@ -15,7 +15,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    // _goToNextScreen();
+    _goToNextScreen();
   }
 
   Future<void> _goToNextScreen() async {

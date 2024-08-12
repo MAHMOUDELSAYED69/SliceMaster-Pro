@@ -55,7 +55,7 @@ abstract class AppTheme {
       appBarTheme: AppBarTheme(
         elevation: BorderSide.strokeAlignOutside,
         backgroundColor: ColorManager.offWhite,
-        shadowColor: ColorManager.darkGrey,
+        shadowColor: ColorManager.black,
         centerTitle: false,
         iconTheme: const IconThemeData(color: ColorManager.black),
         titleTextStyle: TextStyle(

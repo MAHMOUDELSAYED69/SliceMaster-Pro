@@ -65,7 +65,7 @@ abstract class PageTransitionManager {
   }
 
   static PageRouteBuilder fadeTransition(Widget screen,
-      [int milliseconds = 300]) {
+      [int milliseconds = 400]) {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) => screen,
       transitionDuration: Duration(milliseconds: milliseconds),
