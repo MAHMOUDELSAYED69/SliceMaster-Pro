@@ -1,5 +1,7 @@
 abstract class FontFamilyManager {
   const FontFamilyManager._();
 
-  static const String kIBMPlexMonoFontFamily = 'IBMPlexMono';
+  static const String kIBMPlexMono = 'IBMPlexMono';
+
+  static const String kDancingScript = 'DancingScript';
 }
