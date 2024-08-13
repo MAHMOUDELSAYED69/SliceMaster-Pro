@@ -19,55 +19,81 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   void initState() {
     _formKey = GlobalKey<FormState>();
+    _passwordController = TextEditingController();
     super.initState();
   }
 
   late GlobalKey<FormState> _formKey;
+  late TextEditingController _passwordController;
+
+  String? _validatePassword(value) {
+    if (value == null || value.isEmpty) {
+      return 'Please confirm your password';
+    } else if (value != _passwordController.text) {
+      return 'Passwords do not match';
+    }
+    return null;
+  }
+
+  String? _username;
+  String? _password;
+
   @override
   Widget build(BuildContext context) {
     return AuthBackground(
       child: Form(
         key: _formKey,
-        child: Column(
-          children: [
-            SizedBox(height: 50.h),
-            const AuthHeadline(
-              firstText: 'Create an ',
-              secondText: 'Account',
-              smallText: true,
-            ),
-            SizedBox(height: 10.h),
-            Text('Please set a strong username and password.',
-                style: context.textTheme.displaySmall),
-            SizedBox(height: 30.h),
-            const MyTextFormField(
-              title: 'E-Mail',
-              hintText: 'Enter your E-Mail',
-            ),
-            SizedBox(height: 10.h),
-            const MyTextFormField(
-              keyboardType: TextInputType.visiblePassword,
-              hintText: 'Enter your Password',
-              title: 'Password',
-              obscureText: true,
-            ),
-            SizedBox(height: 10.h),
-            const MyTextFormField(
-              keyboardType: TextInputType.visiblePassword,
-              hintText: 'Confirm your Password',
-              title: 'Confirm Password',
-              obscureText: true,
-            ),
-            SizedBox(height: 40.h),
-            MyElevatedButton(
-              title: 'Register',
-              onPressed: () {},
-            ),
-            SizedBox(height: 30.h),
-            TextAndButton(
-              onTap: () => Navigator.pop(context),
-            ),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(height: 54.h),
+              const AuthHeadline(
+                firstText: 'Create an ',
+                secondText: 'Account',
+                smallText: true,
+              ),
+              SizedBox(height: 12.h),
+              Text('Please set a strong username and password.',
+                  style: context.textTheme.displaySmall),
+              SizedBox(height: 30.h),
+              MyTextFormField(
+                onSaved: (data) => _username = data,
+                title: 'Username',
+                hintText: 'Enter your E-Mail',
+              ),
+              SizedBox(height: 10.h),
+              MyTextFormField(
+                controller: _passwordController,
+                keyboardType: TextInputType.visiblePassword,
+                hintText: 'Enter your Password',
+                title: 'Password',
+              ),
+              SizedBox(height: 10.h),
+              MyTextFormField(
+                onSaved: (data) => _password = data,
+                keyboardType: TextInputType.visiblePassword,
+                hintText: 'Confirm your Password',
+                title: 'Confirm Password',
+                obscureText: true,
+                validator: _validatePassword,
+              ),
+              SizedBox(height: 40.h),
+              MyElevatedButton(
+                title: 'Register',
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    _formKey.currentState!.save();
+                    debugPrint('Username: $_username, Password: $_password');
+                  }
+                },
+              ),
+              SizedBox(height: 30.h),
+              TextAndButton(
+                onTap: () => Navigator.pop(context),
+              ),
+              SizedBox(height: 30.h),
+            ],
+          ),
         ),
       ),
     );

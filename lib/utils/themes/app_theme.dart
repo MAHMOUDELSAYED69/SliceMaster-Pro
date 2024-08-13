@@ -38,7 +38,7 @@ abstract class AppTheme {
           elevation: 2,
           textStyle: TextStyle(
             fontFamily: FontFamilyManager.kQuicksand,
-            fontSize: 4.sp,
+            fontSize: 3.7.sp,
             color: ColorManager.black,
             fontWeight: FontWeight.w600,
           ),
@@ -47,7 +47,7 @@ abstract class AppTheme {
             borderRadius: BorderRadius.circular(10),
           ),
           backgroundColor: ColorManager.orange,
-          fixedSize: Size(double.maxFinite, 54.h),
+          fixedSize: Size(double.maxFinite, 35.h),
         ),
       ),
       iconTheme: IconThemeData(color: ColorManager.orange, size: 7.sp),

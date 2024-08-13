@@ -23,7 +23,7 @@ class MyElevatedButton extends StatelessWidget {
     return ElevatedButton(
         style: context.elevatedButtonTheme.style?.copyWith(
           fixedSize: WidgetStatePropertyAll(
-            size ?? Size(context.width * 0.11, 36.h),
+            size ?? Size(context.width * 0.11, 35.h),
           ),
           backgroundColor: WidgetStatePropertyAll(backgroundColor),
           overlayColor: WidgetStatePropertyAll(backgroundColor),

@@ -24,40 +24,55 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   late GlobalKey<FormState> _formKey;
+
+  String? _username;
+  String? _password;
+
   @override
   Widget build(BuildContext context) {
     return AuthBackground(
       child: Form(
         key: _formKey,
-        child: Column(
-          children: [
-            SizedBox(height: 50.h),
-            const AuthHeadline(),
-            SizedBox(height: 10.h),
-            Text('Please enter your credentials.',
-                style: context.textTheme.displaySmall),
-            SizedBox(height: 30.h),
-            const MyTextFormField(
-              title: 'Username',
-              hintText: 'Enter your Username',
-            ),
-            SizedBox(height: 10.h),
-            const MyTextFormField(
-              keyboardType: TextInputType.visiblePassword,
-              hintText: 'Enter your Password',
-              title: 'Password',
-              obscureText: true,
-            ),
-            SizedBox(height: 40.h),
-            MyElevatedButton(
-              title: 'Login',
-              onPressed: () {},
-            ),
-            SizedBox(height: 30.h),
-            TextAndButton(
-              onTap: () => Navigator.pushNamed(context, RouteManager.register),
-            ),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(height: 50.h),
+              const AuthHeadline(),
+              SizedBox(height: 10.h),
+              Text('Please enter your credentials.',
+                  style: context.textTheme.displaySmall),
+              SizedBox(height: 30.h),
+              MyTextFormField(
+                onSaved: (data) => _username = data,
+                title: 'Username',
+                hintText: 'Enter your Username',
+              ),
+              SizedBox(height: 10.h),
+              MyTextFormField(
+                onSaved: (data) => _password = data,
+                keyboardType: TextInputType.visiblePassword,
+                hintText: 'Enter your Password',
+                title: 'Password',
+                obscureText: true,
+              ),
+              SizedBox(height: 40.h),
+              MyElevatedButton(
+                title: 'Login',
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    _formKey.currentState!.save();
+                    debugPrint('Username: $_username, Password: $_password');
+                  }
+                },
+              ),
+              SizedBox(height: 30.h),
+              TextAndButton(
+                onTap: () =>
+                    Navigator.pushNamed(context, RouteManager.register),
+              ),
+              SizedBox(height: 30.h),
+            ],
+          ),
         ),
       ),
     );
