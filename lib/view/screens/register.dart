@@ -59,7 +59,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               MyTextFormField(
                 onSaved: (data) => _username = data,
                 title: 'Username',
-                hintText: 'Enter your E-Mail',
+                hintText: 'Enter your Username',
               ),
               SizedBox(height: 10.h),
               MyTextFormField(
@@ -89,6 +89,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               SizedBox(height: 30.h),
               TextAndButton(
+                buttonText: 'Sign In',
+                text: 'Already have an account? ',
                 onTap: () => Navigator.pop(context),
               ),
               SizedBox(height: 30.h),
