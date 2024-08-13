@@ -4,9 +4,10 @@ import 'package:slice_master_pro/utils/extentions/extentions.dart';
 import 'package:slice_master_pro/view/widgets/custom_button.dart';
 import 'package:slice_master_pro/view/widgets/custom_text_field.dart';
 
+import '../../utils/constants/routes.dart';
 import '../widgets/auth_background.dart';
 import '../widgets/text_and_btn.dart';
-import '../widgets/welcome.dart';
+import '../widgets/auth_headline.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -17,37 +18,47 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   @override
+  void initState() {
+    _formKey = GlobalKey<FormState>();
+    super.initState();
+  }
+
+  late GlobalKey<FormState> _formKey;
+  @override
   Widget build(BuildContext context) {
     return AuthBackground(
-      child: Column(
-        children: [
-          SizedBox(height: 50.h),
-          const WelcomeBackWidget(),
-          SizedBox(height: 10.h),
-          Text('Please enter your credentials',
-              style: context.textTheme.displaySmall),
-          SizedBox(height: 30.h),
-          const MyTextFormField(
-            title: 'E-Mail',
-            hintText: 'Enter your E-Mail',
-          ),
-          SizedBox(height: 10.h),
-          const MyTextFormField(
-            keyboardType: TextInputType.visiblePassword,
-            hintText: 'Enter your Password',
-            title: 'Password',
-            obscureText: true,
-          ),
-          SizedBox(height: 40.h),
-          MyElevatedButton(
-            title: 'Login',
-            onPressed: () {},
-          ),
-          SizedBox(height: 30.h),
-          TextAndButton(
-            onTap: () {},
-          ),
-        ],
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            SizedBox(height: 50.h),
+            const AuthHeadline(),
+            SizedBox(height: 10.h),
+            Text('Please enter your credentials.',
+                style: context.textTheme.displaySmall),
+            SizedBox(height: 30.h),
+            const MyTextFormField(
+              title: 'Username',
+              hintText: 'Enter your Username',
+            ),
+            SizedBox(height: 10.h),
+            const MyTextFormField(
+              keyboardType: TextInputType.visiblePassword,
+              hintText: 'Enter your Password',
+              title: 'Password',
+              obscureText: true,
+            ),
+            SizedBox(height: 40.h),
+            MyElevatedButton(
+              title: 'Login',
+              onPressed: () {},
+            ),
+            SizedBox(height: 30.h),
+            TextAndButton(
+              onTap: () => Navigator.pushNamed(context, RouteManager.register),
+            ),
+          ],
+        ),
       ),
     );
   }
