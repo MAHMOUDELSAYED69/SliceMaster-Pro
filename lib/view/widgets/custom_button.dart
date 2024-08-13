@@ -11,9 +11,7 @@ class MyElevatedButton extends StatelessWidget {
     this.size,
     this.fontSize,
     this.backgroundColor,
-    this.isDisabled,
   });
-  final bool? isDisabled;
   final String? title;
   final VoidCallback? onPressed;
   final Size? size;
@@ -25,16 +23,15 @@ class MyElevatedButton extends StatelessWidget {
     return ElevatedButton(
         style: context.elevatedButtonTheme.style?.copyWith(
           fixedSize: WidgetStatePropertyAll(
-            size ?? Size(context.width, 40.h),
+            size ?? Size(context.width * 0.11, 36.h),
           ),
           backgroundColor: WidgetStatePropertyAll(backgroundColor),
           overlayColor: WidgetStatePropertyAll(backgroundColor),
         ),
-        onPressed: isDisabled == true ? null : onPressed,
+        onPressed: onPressed,
         child: widget ??
             Text(
               title ?? "",
-              style: context.textTheme.displaySmall,
             ));
   }
 }
