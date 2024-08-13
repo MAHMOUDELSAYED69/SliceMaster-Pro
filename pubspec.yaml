@@ -90,13 +90,15 @@ flutter:
     - family: IBMPlexMono
       fonts:
         - asset: assets/fonts/IBMPlexMono-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
+
     - family: DancingScript
       fonts:
         - asset: assets/fonts/DancingScript-Regular.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
+
+    - family: Quicksand
+      fonts:
+        - asset: assets\fonts\Quicksand-Regular.ttf
+
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

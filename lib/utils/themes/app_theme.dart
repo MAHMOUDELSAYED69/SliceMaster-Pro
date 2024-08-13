@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:slice_master_pro/utils/constants/fonts.dart';
 
 import '../constants/colors.dart';
 
@@ -33,22 +34,24 @@ abstract class AppTheme {
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          foregroundColor: ColorManager.white,
-          elevation: 4,
+          foregroundColor: ColorManager.black,
+          elevation: 2,
           textStyle: TextStyle(
-              fontSize: 22.spMin,
-              color: ColorManager.white,
-              fontWeight: FontWeight.w500),
-          overlayColor: ColorManager.red,
+            fontFamily: FontFamilyManager.kQuicksand,
+            fontSize: 4.sp,
+            color: ColorManager.black,
+            fontWeight: FontWeight.w600,
+          ),
+          overlayColor: ColorManager.white.withOpacity(0.2),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(25),
+            borderRadius: BorderRadius.circular(10),
           ),
           backgroundColor: ColorManager.orange,
           fixedSize: Size(double.maxFinite, 54.h),
         ),
       ),
       iconTheme: IconThemeData(color: ColorManager.orange, size: 7.sp),
-      fontFamily: 'Poppins',
+      fontFamily: FontFamilyManager.kQuicksand,
       useMaterial3: true,
       brightness: Brightness.light,
       scaffoldBackgroundColor: ColorManager.offWhite,
@@ -65,26 +68,30 @@ abstract class AppTheme {
       ),
       textTheme: TextTheme(
         bodyLarge: TextStyle(
-            fontSize: 5.sp,
+            fontSize: 7.sp,
             color: ColorManager.orange,
             fontWeight: FontWeight.bold),
         bodyMedium: TextStyle(
           fontSize: 4.sp,
           fontWeight: FontWeight.w500,
-          color: ColorManager.white,
+          color: ColorManager.orange,
         ),
         bodySmall: TextStyle(
-            fontSize: 14.spMin,
+            fontSize:  3.2.sp,
             color: ColorManager.orange,
             fontWeight: FontWeight.w500),
         displaySmall: TextStyle(
-            fontSize: 14.spMin,
-            color: ColorManager.white,
+            fontSize: 3.25.sp,
+            color: ColorManager.black,
             fontWeight: FontWeight.w500),
         displayMedium: TextStyle(
             fontSize: 4.sp,
-            color: ColorManager.orange,
+            color: ColorManager.black,
             fontWeight: FontWeight.w500),
+        displayLarge: TextStyle(
+            fontSize: 7.sp,
+            color: ColorManager.black,
+            fontWeight: FontWeight.bold),
       ),
       inputDecorationTheme: InputDecorationTheme(
         isCollapsed: true,
@@ -92,45 +99,45 @@ abstract class AppTheme {
         errorStyle:
             TextStyle(fontSize: 12.spMin, color: ColorManager.red, height: 0.5),
         hintStyle: TextStyle(fontSize: 12.spMin, color: ColorManager.grey),
-        fillColor: ColorManager.white,
-        filled: true,
         focusedBorder: const OutlineInputBorder(
           borderRadius: BorderRadius.all(
-            Radius.circular(12),
+            Radius.circular(5),
           ),
           borderSide: BorderSide(
-            width: 1.4,
-            color: ColorManager.orange,
+            width: 1.2,
+            color: ColorManager.black,
           ),
         ),
         enabledBorder: const OutlineInputBorder(
           borderRadius: BorderRadius.all(
-            Radius.circular(12),
+            Radius.circular(5),
           ),
           borderSide: BorderSide(
-            width: 1.4,
-            color: ColorManager.orange,
+            width: 1.2,
+            color: ColorManager.black,
           ),
         ),
         errorBorder: const OutlineInputBorder(
           borderRadius: BorderRadius.all(
-            Radius.circular(12),
+            Radius.circular(5),
           ),
           borderSide: BorderSide(
-            width: 1.4,
+            width: 1.2,
             color: ColorManager.red,
           ),
         ),
         focusedErrorBorder: const OutlineInputBorder(
           borderRadius: BorderRadius.all(
-            Radius.circular(12),
+            Radius.circular(5),
           ),
           borderSide: BorderSide(
-            width: 1.4,
+            width: 1.2,
             color: ColorManager.red,
           ),
         ),
-        contentPadding: EdgeInsets.symmetric(vertical: 13.h, horizontal: 10),
+        contentPadding: EdgeInsets.symmetric(vertical: 12.4.h, horizontal: 10),
+        filled: true,
+        fillColor: ColorManager.offWhite2.withOpacity(0.3),
       ),
     );
   }

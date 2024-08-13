@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:slice_master_pro/utils/extentions/extentions.dart';
 
 import '../../utils/constants/colors.dart';
@@ -22,8 +23,8 @@ class AuthBackground extends StatelessWidget {
             fit: BoxFit.cover,
           ),
           Positioned(
-            bottom: 50,
-            top: 50,
+            bottom: 45.h,
+            top: 45.h,
             right: context.width * 0.06,
             child: Container(
               width: context.width / 3,
