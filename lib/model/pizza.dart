@@ -1,20 +1,26 @@
 class PizzaModel {
   final int? id;
   final String name;
-  final int price;
+  final int smallPrice;
+  final int mediumPrice;
+  final int largePrice;
   final String? image;
 
   PizzaModel({
     this.id,
     required this.name,
-    required this.price,
+    required this.smallPrice,
+    required this.mediumPrice,
+    required this.largePrice,
     this.image,
   });
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
       'name': name,
-      'price': price,
+      'smallPrice': smallPrice,
+      'mediumPrice': mediumPrice,
+      'largePrice': largePrice,
       'image': image,
     };
     if (id != null) {
@@ -27,13 +33,15 @@ class PizzaModel {
     return PizzaModel(
       id: map['id'],
       name: map['name'],
-      price: map['price'],
+      smallPrice: map['smallPrice'],
+      mediumPrice: map['mediumPrice'],
+      largePrice: map['largePrice'],
       image: map['image'],
     );
   }
 
   @override
   String toString() {
-    return 'Juice{id: $id, name: $name, price: $price, image: $image}';
+    return 'Pizza{id: $id, name: $name, smallPrice: $smallPrice, mediumPrice: $mediumPrice, largePrice: $largePrice, image: $image}';
   }
 }
