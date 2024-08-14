@@ -4,6 +4,7 @@ import 'package:slice_master_pro/repositories/pizzas.dart';
 
 import '../../utils/helpers/shared_pref.dart';
 
+
 class PizzasRepositoryCubit extends Cubit<List<PizzaModel>> {
   PizzasRepositoryCubit() : super([]) {
     loadUserPizzas();
@@ -15,34 +16,44 @@ class PizzasRepositoryCubit extends Cubit<List<PizzaModel>> {
     emit(pizzas);
   }
 
-  Future<void> addUserJuice(
-      {required String name, required int price, required String image}) async {
+  Future<void> addUserPizza({
+    required String name,
+    required int smallPrice,
+    required int mediumPrice,
+    required int largePrice,
+    required String image,
+  }) async {
     final username = await _getUsername();
-    final newJuice = PizzaModel(
-        name: name,
-        smallPrice: price,
-        largePrice: price,
-        mediumPrice: price,
-        image: image);
-    await PizzasRepository.instance.addUserPizza(username, newJuice);
+    final newPizza = PizzaModel(
+      name: name,
+      smallPrice: smallPrice,
+      mediumPrice: mediumPrice,
+      largePrice: largePrice,
+      image: image,
+    );
+    await PizzasRepository.instance.addUserPizza(username, newPizza);
     await loadUserPizzas();
   }
 
-  Future<void> removeUserJuice({required String juiceName}) async {
+  Future<void> removeUserPizza({required String pizzaName}) async {
     final username = await _getUsername();
-    await PizzasRepository.instance.removeUserPizza(username, juiceName);
+    await PizzasRepository.instance.removeUserPizza(username, pizzaName);
     await loadUserPizzas();
   }
 
-  Future<void> updateJuicePrice(
-      {required PizzaModel pizza, required int newPrice}) async {
+  Future<void> updatePizzaPrice({
+    required PizzaModel pizza,
+    required int newSmallPrice,
+    required int newMediumPrice,
+    required int newLargePrice,
+  }) async {
     final username = await _getUsername();
     await PizzasRepository.instance.updatePizzaPrice(
       username,
       pizza.name,
-      newPrice,
-      newPrice,
-      newPrice,
+      newSmallPrice,
+      newMediumPrice,
+      newLargePrice,
     );
     await loadUserPizzas();
   }

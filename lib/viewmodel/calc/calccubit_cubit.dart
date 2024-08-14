@@ -1,26 +1,68 @@
 import 'package:bloc/bloc.dart';
 import 'package:slice_master_pro/model/pizza.dart';
 
-class CalculatorCubit extends Cubit<Map<PizzaModel, int>> {
+enum PizzaSize { small, medium, large }
+
+class CalculatorCubit extends Cubit<Map<PizzaModel, Map<PizzaSize, int>>> {
   CalculatorCubit() : super({});
 
-  void increment(PizzaModel juice) {
-    final currentCount = state[juice] ?? 0;
-    emit({...state, juice: currentCount + 1});
+  PizzaSize selectedSize = PizzaSize.medium;
+
+  void increment(PizzaModel pizza) {
+    final currentSizeCount = state[pizza]?[selectedSize] ?? 0;
+    final updatedState = {
+      ...state,
+      pizza: {
+        ...state[pizza]!,
+        selectedSize: currentSizeCount + 1,
+      }
+    };
+    emit(updatedState);
   }
 
   void decrement(PizzaModel pizza) {
-    final currentCount = state[pizza] ?? 0;
-    if (currentCount > 0) {
-      emit({...state, pizza: currentCount - 1});
+    final currentSizeCount = state[pizza]?[selectedSize] ?? 0;
+    if (currentSizeCount > 0) {
+      final updatedState = {
+        ...state,
+        pizza: {
+          ...state[pizza]!,
+          selectedSize: currentSizeCount - 1,
+        }
+      };
+      emit(updatedState);
     }
+  }
+
+  void setSize(PizzaSize size) {
+    selectedSize = size;
+    emit({...state}); // Emit state to update the UI if needed
   }
 
   void reset() => emit({});
 
   double getTotalPrice() {
     return state.entries.fold<double>(0, (sum, entry) {
-      return sum + entry.key.mediumPrice * entry.value;
+      final pizza = entry.key;
+      final sizeCounts = entry.value;
+      return sum +
+          sizeCounts.entries.fold<double>(0, (sizeSum, sizeEntry) {
+            final size = sizeEntry.key;
+            final count = sizeEntry.value;
+            final price = getPizzaPrice(pizza, size);
+            return sizeSum + (price * count);
+          });
     });
+  }
+
+  num getPizzaPrice(PizzaModel pizza, PizzaSize size) {
+    switch (size) {
+      case PizzaSize.small:
+        return pizza.smallPrice;
+      case PizzaSize.medium:
+        return pizza.mediumPrice;
+      case PizzaSize.large:
+        return pizza.largePrice;
+    }
   }
 }
