@@ -6,7 +6,7 @@ import '../../utils/constants/colors.dart';
 
 class ItemCard extends StatelessWidget {
   const ItemCard({super.key, required this.price, required this.name});
-  final int price;
+  final num price;
   final String name;
   @override
   Widget build(BuildContext context) {
