@@ -1,9 +1,9 @@
 class PizzaModel {
   final int? id;
   final String name;
-  final int smallPrice;
-  final int mediumPrice;
-  final int largePrice;
+  final num smallPrice;
+  final num mediumPrice;
+  final num largePrice;
   final String? image;
 
   PizzaModel({
