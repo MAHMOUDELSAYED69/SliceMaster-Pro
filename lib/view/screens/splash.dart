@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:slice_master_pro/utils/extentions/extentions.dart';
 
 import '../../utils/constants/images.dart';
@@ -35,10 +36,12 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-           Image.asset(
+            SizedBox(
               width: context.width / 3,
               height: context.height / 3,
-              ImageManager.logo,
+              child: SvgPicture.asset(
+                ImageManager.logo,
+              ),
             ),
             Image.asset(
               width: context.width / 3,

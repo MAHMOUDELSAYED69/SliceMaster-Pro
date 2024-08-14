@@ -3,7 +3,7 @@ abstract class ImageManager {
 
   static const String splashImage = 'assets/images/Pizza-slice 2.png';
 
-  static const String logo = 'assets/images/Logo.png';
+  static const String logo = 'assets/images/Logo.svg';
 
   static const String authBackground = 'assets/images/Normalmoderesevation.png';
 

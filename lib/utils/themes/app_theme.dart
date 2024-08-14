@@ -10,9 +10,14 @@ abstract class AppTheme {
     return ThemeData(
       iconButtonTheme: IconButtonThemeData(
         style: ButtonStyle(
-          overlayColor: const WidgetStatePropertyAll(ColorManager.white),
+          overlayColor: const WidgetStatePropertyAll(ColorManager.offWhite),
+          iconSize: WidgetStatePropertyAll(6.sp),
+          alignment: Alignment.center,
+          shape: WidgetStatePropertyAll(RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10)
+          )),
           backgroundColor: WidgetStatePropertyAll(
-            ColorManager.white.withOpacity(0.7),
+            ColorManager.offWhite.withOpacity(0.7),
           ),
         ),
       ),
@@ -56,8 +61,9 @@ abstract class AppTheme {
       brightness: Brightness.light,
       scaffoldBackgroundColor: ColorManager.offWhite,
       appBarTheme: AppBarTheme(
+        toolbarHeight: kToolbarHeight.h,
         elevation: BorderSide.strokeAlignOutside,
-        backgroundColor: ColorManager.offWhite,
+        backgroundColor: ColorManager.darkGrey,
         shadowColor: ColorManager.black,
         centerTitle: false,
         iconTheme: const IconThemeData(color: ColorManager.black),
@@ -77,7 +83,7 @@ abstract class AppTheme {
           color: ColorManager.orange,
         ),
         bodySmall: TextStyle(
-            fontSize:  3.2.sp,
+            fontSize: 3.2.sp,
             color: ColorManager.orange,
             fontWeight: FontWeight.w500),
         displaySmall: TextStyle(

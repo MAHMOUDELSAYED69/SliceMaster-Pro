@@ -62,6 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
                     debugPrint('Username: $_username, Password: $_password');
+                    Navigator.pushReplacementNamed(context, RouteManager.home);
                   }
                 },
               ),

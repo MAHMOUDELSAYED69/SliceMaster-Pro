@@ -84,6 +84,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
                     debugPrint('Username: $_username, Password: $_password');
+                    Navigator.pop(context);
                   }
                 },
               ),

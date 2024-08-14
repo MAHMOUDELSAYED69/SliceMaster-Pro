@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:slice_master_pro/view/screens/home.dart';
 
 import '../utils/constants/routes.dart';
 import '../view/screens/login.dart';
@@ -23,6 +24,11 @@ abstract class AppRouter {
       case RouteManager.register:
         return PageTransitionManager.fadeTransition(
           const RegisterScreen(),
+        );
+
+      case RouteManager.home:
+        return PageTransitionManager.fadeTransition(
+          const HomeScreen(),
         );
 
       default:
