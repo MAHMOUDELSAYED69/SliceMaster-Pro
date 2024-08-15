@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:slice_master_pro/utils/extentions/extentions.dart';
 import 'package:slice_master_pro/view/widgets/custom_button.dart';
 import 'package:slice_master_pro/view/widgets/custom_text_field.dart';
 
+import '../../utils/helpers/my_snackbar.dart';
+import '../../viewmodel/register/register_cubit.dart';
 import '../widgets/auth_background.dart';
 import '../widgets/text_and_btn.dart';
 import '../widgets/auth_headline.dart';
@@ -37,6 +40,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   String? _username;
   String? _password;
+  void _register() {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+      debugPrint('Username: $_username, Password: $_password');
+      context.cubit<RegisterCubit>().register(_username!, _password!);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,15 +88,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 validator: _validatePassword,
               ),
               SizedBox(height: 40.h),
-              MyElevatedButton(
-                title: 'Register',
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    _formKey.currentState!.save();
-                    debugPrint('Username: $_username, Password: $_password');
+              BlocListener<RegisterCubit, RegisterState>(
+                listener: (context, state) {
+                  if (state is RegisterSuccess) {
+                    customSnackBar(context, 'Registration success, Login now!');
                     Navigator.pop(context);
                   }
+                  if (state is RegisterFailure) {
+                    customSnackBar(context, 'Registration failed!');
+                  }
+                  if (state is UsernameTaken) {
+                    customSnackBar(context, 'Username already taken!');
+                  }
                 },
+                child: MyElevatedButton(
+                  title: 'Register',
+                  onPressed: _register,
+                ),
               ),
               SizedBox(height: 30.h),
               TextAndButton(

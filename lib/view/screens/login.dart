@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:slice_master_pro/utils/extentions/extentions.dart';
 import 'package:slice_master_pro/view/widgets/custom_button.dart';
 import 'package:slice_master_pro/view/widgets/custom_text_field.dart';
+import 'package:slice_master_pro/viewmodel/login/login_cubit.dart';
 
 import '../../utils/constants/routes.dart';
+import '../../utils/helpers/my_snackbar.dart';
 import '../widgets/auth_background.dart';
 import '../widgets/text_and_btn.dart';
 import '../widgets/auth_headline.dart';
@@ -27,6 +30,16 @@ class _LoginScreenState extends State<LoginScreen> {
 
   String? _username;
   String? _password;
+
+  void _login() {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+      debugPrint('Username: $_username, Password: $_password');
+      context
+          .cubit<LoginCubit>()
+          .login(username: _username!, password: _password!);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,15 +69,21 @@ class _LoginScreenState extends State<LoginScreen> {
                 obscureText: true,
               ),
               SizedBox(height: 40.h),
-              MyElevatedButton(
-                title: 'Login',
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    _formKey.currentState!.save();
-                    debugPrint('Username: $_username, Password: $_password');
+              BlocListener<LoginCubit, LoginState>(
+                listener: (context, state) {
+                  if (state is LoginSuccess) {
+                    customSnackBar(context, 'Login success!');
+
                     Navigator.pushReplacementNamed(context, RouteManager.home);
                   }
+                  if (state is LoginFailure) {
+                    customSnackBar(context, 'Login failed!');
+                  }
                 },
+                child: MyElevatedButton(
+                  title: 'Login',
+                  onPressed: _login,
+                ),
               ),
               SizedBox(height: 30.h),
               TextAndButton(
