@@ -5,9 +5,11 @@ import 'package:slice_master_pro/view/screens/pizza_managment.dart';
 import 'package:slice_master_pro/viewmodel/repository/pizza_cubit.dart';
 
 import '../utils/constants/routes.dart';
+import '../view/screens/archive.dart';
 import '../view/screens/login.dart';
 import '../view/screens/register.dart';
 import '../view/screens/splash.dart';
+import '../viewmodel/archive/archive_cubit.dart';
 import '../viewmodel/calc/calccubit_cubit.dart';
 import '../viewmodel/image/image_cubit.dart';
 import '../viewmodel/invoice/invoice_cubit.dart';
@@ -73,7 +75,13 @@ abstract class AppRouter {
             child: const PizzaManagmentScreen(),
           ),
         );
- 
+      case RouteManager.archive:
+        return PageTransitionManager.fadeTransition(
+          BlocProvider(
+            create: (context) => ArchiveCubit()..fetchInvoices(),
+            child: const ArchiveScreen(),
+          ),
+        );
       default:
         return null;
     }
