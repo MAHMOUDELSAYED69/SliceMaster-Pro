@@ -33,8 +33,8 @@ class _InvoiceWidgetState extends State<InvoiceWidget> {
   Widget build(BuildContext context) {
     const border = BorderSide(width: 1, color: ColorManager.orange);
 
-    final calculator = context.read<CalculatorCubit>();
-    final invoice = context.read<InvoiceCubit>();
+    final calculator = context.cubit<CalculatorCubit>();
+    final invoice = context.cubit<InvoiceCubit>();
 
     return Container(
       margin: EdgeInsets.only(right: context.width / 30),

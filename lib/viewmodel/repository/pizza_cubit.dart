@@ -43,9 +43,9 @@ class PizzasRepositoryCubit extends Cubit<List<PizzaModel>> {
 
   Future<void> updatePizzaPrice({
     required PizzaModel pizza,
-    required int newSmallPrice,
-    required int newMediumPrice,
-    required int newLargePrice,
+    required num newSmallPrice,
+    required num newMediumPrice,
+    required num newLargePrice,
   }) async {
     final username = await _getUsername();
     await PizzasRepository.instance.updatePizzaPrice(

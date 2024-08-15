@@ -13,7 +13,7 @@ class CalculatorCubit extends Cubit<Map<PizzaModel, Map<PizzaSize, int>>> {
     final updatedState = {
       ...state,
       pizza: {
-        ...state[pizza]!,
+        ...?state[pizza],
         selectedSize: currentSizeCount + 1,
       }
     };
@@ -26,7 +26,7 @@ class CalculatorCubit extends Cubit<Map<PizzaModel, Map<PizzaSize, int>>> {
       final updatedState = {
         ...state,
         pizza: {
-          ...state[pizza]!,
+          ...?state[pizza],
           selectedSize: currentSizeCount - 1,
         }
       };
@@ -36,7 +36,7 @@ class CalculatorCubit extends Cubit<Map<PizzaModel, Map<PizzaSize, int>>> {
 
   void setSize(PizzaSize size) {
     selectedSize = size;
-    emit({...state}); // Emit state to update the UI if needed
+    emit({...state});
   }
 
   void reset() => emit({});

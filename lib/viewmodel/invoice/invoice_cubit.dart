@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pdf/pdf.dart' show PdfColor;
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
@@ -201,6 +200,7 @@ class InvoiceCubit extends Cubit<InvoiceState> {
     );
 
     await Printing.sharePdf(bytes: await pdf.save(), filename: 'invoice.pdf');
+    debugPrint('Invoice generated.');
     emit(InvoiceGenerated());
   }
 }

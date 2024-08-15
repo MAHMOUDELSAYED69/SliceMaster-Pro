@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:slice_master_pro/view/screens/home.dart';
+import 'package:slice_master_pro/view/screens/pizza_managment.dart';
 import 'package:slice_master_pro/viewmodel/repository/pizza_cubit.dart';
 
 import '../utils/constants/routes.dart';
@@ -8,6 +9,7 @@ import '../view/screens/login.dart';
 import '../view/screens/register.dart';
 import '../view/screens/splash.dart';
 import '../viewmodel/calc/calccubit_cubit.dart';
+import '../viewmodel/image/image_cubit.dart';
 import '../viewmodel/invoice/invoice_cubit.dart';
 import '../viewmodel/login/login_cubit.dart';
 import '../viewmodel/logout/logout_cubit.dart';
@@ -23,7 +25,7 @@ abstract class AppRouter {
       case RouteManager.initialRoute:
         return PageTransitionManager.fadeTransition(
           BlocProvider(
-            create: (context) => AuthStatus(),
+            create: (context) => AuthStatusCubit(),
             child: const SplashScreen(),
           ),
         );
@@ -48,11 +50,29 @@ abstract class AppRouter {
             ),
             BlocProvider.value(value: _pizzasRepositoryCubit..loadUserPizzas()),
             BlocProvider(
+              create: (context) => AuthStatusCubit(),
+            ),
+            BlocProvider(
               create: (context) => CalculatorCubit(),
             ),
           ],
           child: const HomeScreen(),
         ));
+      case RouteManager.pizzaManagement:
+        return PageTransitionManager.materialSlideTransition(
+          MultiBlocProvider(
+            providers: [
+              BlocProvider.value(value: _pizzasRepositoryCubit),
+              BlocProvider(
+                create: (context) => PickImageCubit(),
+              ),
+              BlocProvider(
+                create: (context) => AuthStatusCubit(),
+              ),
+            ],
+            child: const PizzaManagmentScreen(),
+          ),
+        );
 
       default:
         return null;

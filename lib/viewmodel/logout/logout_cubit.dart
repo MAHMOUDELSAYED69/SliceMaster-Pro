@@ -5,8 +5,8 @@ import '../../utils/helpers/shared_pref.dart';
 
 part 'logout_state.dart';
 
-class AuthStatus extends Cubit<AuthStatusState> {
-  AuthStatus() : super(LogoutInitial());
+class AuthStatusCubit extends Cubit<AuthStatusState> {
+  AuthStatusCubit() : super(LogoutInitial());
 
   void checkLoginStatus() {
     try {

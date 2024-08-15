@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:slice_master_pro/utils/extentions/extentions.dart';
 
 import '../../utils/constants/colors.dart';
 import '../../utils/constants/routes.dart';
@@ -19,21 +20,21 @@ class LogoutWidget extends StatelessWidget {
       message: 'Logout',
       decoration: BoxDecoration(
           color: ColorManager.red, borderRadius: BorderRadius.circular(4)),
-      child: BlocListener<AuthStatus, AuthStatusState>(
+      child: BlocListener<AuthStatusCubit, AuthStatusState>(
         listener: (context, state) {
           if (state is Logout) {
             Navigator.pushNamedAndRemoveUntil(
                 context, RouteManager.login, (route) => false);
             customSnackBar(context, 'Logout Successfully!');
           }
-
+    
           if (state is LogoutFailure) {
             customSnackBar(context, 'There was an error!');
           }
         },
         child: IconButton(
           icon: const Icon(Icons.logout),
-          onPressed: () => context.read<AuthStatus>().logout(),
+          onPressed: () => context.cubit<AuthStatusCubit>().logout(),
         ),
       ),
     );
