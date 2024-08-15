@@ -12,14 +12,14 @@ import '../../viewmodel/calc/calccubit_cubit.dart';
 import '../../viewmodel/invoice/invoice_cubit.dart';
 import 'custom_text_field.dart';
 
-class InvoiceWidget extends StatefulWidget {
-  const InvoiceWidget({super.key});
+class InvoiceCard extends StatefulWidget {
+  const InvoiceCard({super.key});
 
   @override
-  State<InvoiceWidget> createState() => _InvoiceWidgetState();
+  State<InvoiceCard> createState() => _InvoiceCardState();
 }
 
-class _InvoiceWidgetState extends State<InvoiceWidget> {
+class _InvoiceCardState extends State<InvoiceCard> {
   late GlobalKey<FormState> _formkey;
   String? _customerName;
 
