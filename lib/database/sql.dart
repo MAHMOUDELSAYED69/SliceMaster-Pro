@@ -26,7 +26,7 @@ class SqlDb {
     String path = join(databasePath, 'slice_master.db');
     Database mydb = await openDatabase(
       path,
-      version: 2,
+      version: 2, // Update this version number when you make schema changes
       onCreate: _onCreate,
       onUpgrade: _onUpgrade,
     );
@@ -40,7 +40,7 @@ class SqlDb {
   }
 
   Future<void> _onCreate(Database db, int version) async {
-    //? Create 'users' table
+    // Create 'users' table
     await db.execute('''
       CREATE TABLE users (
         id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
@@ -51,21 +51,21 @@ class SqlDb {
       )
     ''');
 
-    //? Create 'pizzas' table with the new schema
+    // Create 'pizzas' table with the new schema
     await db.execute('''
       CREATE TABLE Pizzas (
         id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
-        smallPrice INTEGER NOT NULL,
-        mediumPrice INTEGER NOT NULL,
-        largePrice INTEGER NOT NULL,
+        smallPrice REAL NOT NULL,
+        mediumPrice REAL NOT NULL,
+        largePrice REAL NOT NULL,
         image TEXT NOT NULL,
         username TEXT NOT NULL,
         FOREIGN KEY (username) REFERENCES users(username)
       )
     ''');
 
-    //? Create 'invoices' table
+    // Create 'invoices' table
     await db.execute('''
       CREATE TABLE IF NOT EXISTS invoices (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -86,14 +86,15 @@ class SqlDb {
 
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
     if (oldVersion < 2) {
+      // Upgrade from version 1 to 2: Add new columns to the 'Pizzas' table
       await db.execute('''
-        ALTER TABLE Pizzas ADD COLUMN smallPrice INTEGER NOT NULL DEFAULT 0;
+        ALTER TABLE Pizzas ADD COLUMN smallPrice REAL NOT NULL DEFAULT 0;
       ''');
       await db.execute('''
-        ALTER TABLE Pizzas ADD COLUMN mediumPrice INTEGER NOT NULL DEFAULT 0;
+        ALTER TABLE Pizzas ADD COLUMN mediumPrice REAL NOT NULL DEFAULT 0;
       ''');
       await db.execute('''
-        ALTER TABLE Pizzas ADD COLUMN largePrice INTEGER NOT NULL DEFAULT 0;
+        ALTER TABLE Pizzas ADD COLUMN largePrice REAL NOT NULL DEFAULT 0;
       ''');
     }
   }

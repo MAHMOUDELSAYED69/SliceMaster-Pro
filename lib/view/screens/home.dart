@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:slice_master_pro/utils/constants/images.dart';
+import 'package:slice_master_pro/utils/constants/routes.dart';
 import 'package:slice_master_pro/utils/extentions/extentions.dart';
+import 'package:slice_master_pro/view/widgets/logout_widget.dart';
 
 import '../../model/pizza.dart';
 import '../../viewmodel/calc/calccubit_cubit.dart';
@@ -27,7 +31,8 @@ class HomeScreen extends StatelessWidget {
         actions: [
           SizedBox(width: 5.w),
           IconButton(
-            onPressed: () {},
+            onPressed: () =>
+                Navigator.pushNamed(context, RouteManager.pizzaManagement),
             icon: const Icon(Icons.local_pizza),
           ),
           SizedBox(width: 5.w),
@@ -36,10 +41,7 @@ class HomeScreen extends StatelessWidget {
             icon: const Icon(Icons.inventory),
           ),
           SizedBox(width: 5.w),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.logout),
-          ),
+          const LogoutWidget(),
           SizedBox(width: 5.w),
         ],
       ),
@@ -84,7 +86,7 @@ class HomeScreen extends StatelessWidget {
                                   ],
                                   image: DecorationImage(
                                     fit: BoxFit.cover,
-                                    image: AssetImage(pizza.image!),
+                                    image: FileImage(File(pizza.image!)),
                                   ),
                                 ),
                               ),
@@ -104,24 +106,6 @@ class HomeScreen extends StatelessWidget {
                   ),
                   const InvoiceWidget(),
                 ],
-              ),
-              Positioned(
-                left: 5,
-                top: 5,
-                child: IconButton(
-                  hoverColor: Colors.white,
-                  style: ButtonStyle(
-                    backgroundColor: WidgetStatePropertyAll(
-                      Colors.white.withOpacity(0.7),
-                    ),
-                  ),
-                  onPressed: () => Navigator.pushNamed(context, '/settings'),
-                  icon: const Icon(
-                    size: 24,
-                    Icons.settings,
-                    color: Colors.brown,
-                  ),
-                ),
               ),
             ],
           );

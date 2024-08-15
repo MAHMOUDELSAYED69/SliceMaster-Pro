@@ -63,7 +63,7 @@ class PizzasRepository {
   }
 
   Future<void> updatePizzaPrice(String username, String pizzaName,
-      int newSmallPrice, int newMediumPrice, int newLargePrice) async {
+      num newSmallPrice, num newMediumPrice, num newLargePrice) async {
     final data = '''
       UPDATE pizzas SET smallPrice = $newSmallPrice, mediumPrice = $newMediumPrice, largePrice = $newLargePrice WHERE username = "$username" AND name = '$pizzaName'
     ''';
