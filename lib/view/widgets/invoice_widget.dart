@@ -37,32 +37,27 @@ class _InvoiceWidgetState extends State<InvoiceWidget> {
     final invoice = context.cubit<InvoiceCubit>();
 
     return Container(
-      margin: EdgeInsets.only(right: context.width / 30),
-      width: context.width / 4.5,
+      margin: EdgeInsets.only(right: context.width * 0.04),
+      width: context.width / 3.5,
       height: context.height / 1.2,
       decoration: BoxDecoration(
-        color: ColorManager.white,
+        boxShadow: ShadowManager.shadow,
+        color: ColorManager.offWhite2.withOpacity(0.6),
         borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            offset: const Offset(1, -1),
-            color: ColorManager.orange.withOpacity(0.5),
-            blurRadius: 5,
-            spreadRadius: 2,
-          ),
-        ],
       ),
       child: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [
-              SizedBox(height: 10.h),
-              SvgPicture.asset(
-                ImageManager.logo,
-                height: 150,
+              SizedBox(height: 15.h),
+              SizedBox(
+                width: context.width / 5,
+                child: SvgPicture.asset(
+                  ImageManager.logo,
+                ),
               ),
-              SizedBox(height: 10.h),
+              SizedBox(height: 25.h),
               BlocBuilder<CalculatorCubit,
                   Map<PizzaModel, Map<PizzaSize, int>>>(
                 builder: (context, pizzaCounts) {
@@ -121,12 +116,12 @@ class _InvoiceWidgetState extends State<InvoiceWidget> {
                         ),
                         if (calculator.getTotalPrice() == 0.0)
                           SizedBox(
-                            height: context.height / 3,
+                            height: context.height / 2.45,
                             child: Padding(
                               padding: EdgeInsets.only(top: 3.h),
                               child: const Placeholder(
-                                strokeWidth: 1,
-                                color: ColorManager.orange,
+                                strokeWidth: 1.1,
+                                color: ColorManager.black,
                               ),
                             ),
                           ),
@@ -136,31 +131,33 @@ class _InvoiceWidgetState extends State<InvoiceWidget> {
                         ),
                         SizedBox(height: 10.h),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Expanded(
-                              child: MyElevatedButton(
-                                title: 'Get Invoice',
-                                onPressed: () {
-                                  if (_formkey.currentState?.validate() ??
-                                      false) {
-                                    _formkey.currentState?.save();
-                                    invoice.generateInvoice(
-                                      pizzaCounts: pizzaCounts,
-                                      customerName: _customerName!,
-                                    );
-                                    calculator.reset();
-                                    _formkey.currentState?.reset();
-                                  }
-                                },
-                              ),
+                            MyElevatedButton(
+                              title: 'Get Invoice',
+                              onPressed: () {
+                                if (_formkey.currentState?.validate() ??
+                                    false) {
+                                  _formkey.currentState?.save();
+                                  invoice.generateInvoice(
+                                    pizzaCounts: pizzaCounts,
+                                    customerName: _customerName!,
+                                  );
+                                  calculator.reset();
+                                  _formkey.currentState?.reset();
+                                }
+                              },
                             ),
+                            SizedBox(width: 5.w),
                             IconButton(
                               onPressed: () {
                                 calculator.reset();
                                 _formkey.currentState?.reset();
                               },
-                              hoverColor: ColorManager.grey.withOpacity(0.2),
-                              icon: const Icon(Icons.refresh),
+                              icon: const Icon(
+                                Icons.refresh,
+                                color: ColorManager.black,
+                              ),
                             ),
                           ],
                         ),
@@ -181,7 +178,10 @@ class _InvoiceWidgetState extends State<InvoiceWidget> {
       padding: const EdgeInsets.all(8.0),
       child: Text(
         data,
-        style: context.textTheme.displayMedium?.copyWith(fontSize: 3.sp),
+        style: context.textTheme.displayMedium?.copyWith(
+          fontSize: 3.sp,
+          fontWeight: FontWeight.w900,
+        ),
         textAlign: TextAlign.center,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,

@@ -37,13 +37,13 @@ abstract class AppRouter {
         ));
 
       case RouteManager.register:
-        return PageTransitionManager.materialSlideTransition(BlocProvider(
+        return PageTransitionManager.fadeTransition(BlocProvider(
           create: (context) => RegisterCubit(),
           child: const RegisterScreen(),
         ));
 
       case RouteManager.home:
-        return PageTransitionManager.materialSlideTransition(MultiBlocProvider(
+        return PageTransitionManager.fadeTransition(MultiBlocProvider(
           providers: [
             BlocProvider(
               create: (context) => InvoiceCubit(),
@@ -59,7 +59,7 @@ abstract class AppRouter {
           child: const HomeScreen(),
         ));
       case RouteManager.pizzaManagement:
-        return PageTransitionManager.materialSlideTransition(
+        return PageTransitionManager.fadeTransition(
           MultiBlocProvider(
             providers: [
               BlocProvider.value(value: _pizzasRepositoryCubit),
@@ -73,7 +73,7 @@ abstract class AppRouter {
             child: const PizzaManagmentScreen(),
           ),
         );
-
+ 
       default:
         return null;
     }
