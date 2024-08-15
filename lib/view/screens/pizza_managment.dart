@@ -54,6 +54,14 @@ class _PizzaManagmentScreenState extends State<PizzaManagmentScreen> {
       body: Stack(
         alignment: Alignment.center,
         children: [
+          Positioned(
+            bottom: -35,
+            right: 10,
+            child: Image.asset(
+              ImageManager.splashImage,
+              width: context.width * 0.2,
+            ),
+          ),
           Padding(
             padding: EdgeInsets.only(right: context.width / 2.7),
             child: Column(
@@ -77,10 +85,18 @@ class _PizzaManagmentScreenState extends State<PizzaManagmentScreen> {
                           style: ButtonStyle(
                             padding:
                                 const WidgetStatePropertyAll(EdgeInsets.zero),
+                            shape: const WidgetStatePropertyAll(
+                              RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                                // side: BorderSide(
+                                //     width: 1.2, color: ColorManager.offWhite2),
+                              ),
+                            ),
                             overlayColor: const WidgetStatePropertyAll(
-                                ColorManager.white),
+                                ColorManager.offWhite2),
                             backgroundColor: WidgetStatePropertyAll(
-                                ColorManager.white.withOpacity(0.7)),
+                                ColorManager.offWhite2.withOpacity(0.9)),
                             fixedSize: WidgetStatePropertyAll(
                               Size(context.width / 3, context.height / 2),
                             ),
@@ -98,7 +114,7 @@ class _PizzaManagmentScreenState extends State<PizzaManagmentScreen> {
                               : Icon(
                                   Icons.add_a_photo_rounded,
                                   size: 20.sp,
-                                  color: context.iconTheme.color,
+                                  color: ColorManager.darkGrey,
                                 ),
                           onPressed: () =>
                               context.cubit<PickImageCubit>().pickImage(),
@@ -107,6 +123,7 @@ class _PizzaManagmentScreenState extends State<PizzaManagmentScreen> {
                     ),
                   ],
                 ),
+                SizedBox(height: 10.h),
                 _buildPizzaForm(context)
               ],
             ),
@@ -116,24 +133,22 @@ class _PizzaManagmentScreenState extends State<PizzaManagmentScreen> {
             top: 0,
             bottom: 0,
             child: Container(
-              margin: EdgeInsets.only(right: context.width / 30),
+              margin: EdgeInsets.only(right: context.width * 0.04, bottom: 20),
               width: context.width / 3,
               height: context.height / 1.2,
               decoration: BoxDecoration(
-                color: ColorManager.white,
-                boxShadow: [
-                  BoxShadow(
-                    offset: const Offset(1, -1),
-                    color: ColorManager.orange.withOpacity(0.5),
-                    blurRadius: 5,
-                    spreadRadius: 2,
-                  ),
-                ],
+                // border: const Border.symmetric(
+                //   vertical: BorderSide(width: 2, color: ColorManager.darkGrey),
+                // ),
+                color: ColorManager.offWhite2.withOpacity(0.6),
+                boxShadow: ShadowManager.shadow,
+                borderRadius:
+                    const BorderRadius.vertical(bottom: Radius.circular(20)),
               ),
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    _buildJuiceList(context),
+                    _buildPizzaList(context),
                   ],
                 ),
               ),
@@ -184,18 +199,18 @@ class _PizzaManagmentScreenState extends State<PizzaManagmentScreen> {
     );
   }
 
-  Widget _buildJuiceList(BuildContext context) {
+  Widget _buildPizzaList(BuildContext context) {
     return BlocBuilder<PizzasRepositoryCubit, List<PizzaModel>>(
       builder: (context, pizzas) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: pizzas.map((pizza) => _buildJuiceItem(pizza)).toList(),
+          children: pizzas.map((pizza) => _buildPizzaItem(pizza)).toList(),
         );
       },
     );
   }
 
-  Widget _buildJuiceItem(PizzaModel pizza) {
+  Widget _buildPizzaItem(PizzaModel pizza) {
     return ListTile(
       leading: CircleAvatar(
         radius: 40,

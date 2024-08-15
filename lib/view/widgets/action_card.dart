@@ -4,8 +4,8 @@ import 'package:slice_master_pro/utils/extentions/extentions.dart';
 
 import '../../utils/constants/colors.dart';
 
-class AddAndRemoveCard extends StatefulWidget {
-  const AddAndRemoveCard({
+class ActionCard extends StatefulWidget {
+  const ActionCard({
     super.key,
     this.onIncrement,
     this.onDecrement,
@@ -14,10 +14,10 @@ class AddAndRemoveCard extends StatefulWidget {
   final void Function()? onDecrement;
 
   @override
-  State<AddAndRemoveCard> createState() => _AddAndRemoveCardState();
+  State<ActionCard> createState() => _ActionCardState();
 }
 
-class _AddAndRemoveCardState extends State<AddAndRemoveCard> {
+class _ActionCardState extends State<ActionCard> {
   PizzaSize? _selectedSize = PizzaSize.S;
   @override
   Widget build(BuildContext context) {

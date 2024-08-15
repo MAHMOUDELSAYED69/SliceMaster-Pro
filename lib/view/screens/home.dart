@@ -10,10 +10,11 @@ import 'package:slice_master_pro/utils/extentions/extentions.dart';
 import 'package:slice_master_pro/view/widgets/logout_widget.dart';
 
 import '../../model/pizza.dart';
+import '../../utils/constants/colors.dart';
 import '../../viewmodel/calc/calccubit_cubit.dart';
 import '../../viewmodel/repository/pizza_cubit.dart';
-import '../widgets/add_remove.dart';
-import '../widgets/invoice_widget.dart';
+import '../widgets/action_card.dart';
+import '../widgets/invoice_card.dart';
 import '../widgets/item_card.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -37,7 +38,7 @@ class HomeScreen extends StatelessWidget {
           ),
           SizedBox(width: 5.w),
           IconButton(
-            onPressed: () {},
+            onPressed: ()=> Navigator.pushNamed(context, RouteManager.archive),
             icon: const Icon(Icons.inventory),
           ),
           SizedBox(width: 5.w),
@@ -49,6 +50,14 @@ class HomeScreen extends StatelessWidget {
         builder: (context, userPizzaList) {
           return Stack(
             children: [
+              Positioned(
+                bottom: -35,
+                right: 10,
+                child: Image.asset(
+                  ImageManager.splashImage,
+                  width: context.width * 0.2,
+                ),
+              ),
               Row(
                 children: [
                   Expanded(
@@ -56,55 +65,55 @@ class HomeScreen extends StatelessWidget {
                       padding: EdgeInsets.only(
                         left: context.width / 25,
                         right: context.width / 25,
-                        top: 10,
+                        top: 32.h,
                         bottom: 50,
                       ),
                       itemCount: userPizzaList.length,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisSpacing: 20,
-                        mainAxisSpacing: 20,
-                        crossAxisCount: 4,
+                        crossAxisSpacing: 30,
+                        mainAxisSpacing: 30,
+                        crossAxisCount: 3,
                       ),
                       itemBuilder: (context, index) {
                         final pizza = userPizzaList[index];
-                        return GestureDetector(
-                          onTap: () => calculator.increment(pizza),
-                          child: Stack(
-                            alignment: Alignment.bottomCenter,
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      offset: const Offset(1, -1),
-                                      color: Colors.brown.withOpacity(0.5),
-                                      blurRadius: 5,
-                                      spreadRadius: 2,
-                                    ),
-                                  ],
-                                  image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: FileImage(File(pizza.image!)),
-                                  ),
+                        return Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                boxShadow: ShadowManager.shadow,
+                                color: ColorManager.offWhite2.withOpacity(0.5),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                            Container(
+                              width: context.width * 0.15,
+                              height: context.width * 0.15,
+                              alignment: Alignment.center,
+                              margin: EdgeInsets.only(bottom: 20.h),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: FileImage(File(pizza.image!)),
                                 ),
                               ),
-                              ItemCard(
-                                price: pizza.mediumPrice,
-                                name: pizza.name,
-                              ),
-                              AddAndRemoveCard(
-                                onDecrement: () => calculator.decrement(pizza),
-                                onIncrement: () => calculator.increment(pizza),
-                              ),
-                            ],
-                          ),
-                        );
+                            ),
+                            ItemCard(
+                              price: pizza.mediumPrice,
+                              name: pizza.name,
+                            ),
+                            ActionCard(
+                              onDecrement: () => calculator.decrement(pizza),
+                              onIncrement: () => calculator.increment(pizza),
+                            ),
+                          ],
+                        );  
                       },
                     ),
                   ),
-                  const InvoiceWidget(),
+                  const InvoiceCard(),
                 ],
               ),
             ],

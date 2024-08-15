@@ -18,6 +18,7 @@ class ItemCard extends StatelessWidget {
           children: [
             Text(name,
                 style: context.textTheme.displaySmall?.copyWith(
+                  color: ColorManager.white,
                   fontSize: 5.sp,
                   fontWeight: FontWeight.w600,
                   shadows: [
@@ -49,6 +50,7 @@ class ItemCard extends StatelessWidget {
                 Text('EGP',
                     style: context.textTheme.displaySmall?.copyWith(
                       fontSize: 5.sp,
+                      color: ColorManager.white,
                       shadows: [
                         Shadow(
                           offset: const Offset(1, -1),
