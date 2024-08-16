@@ -17,6 +17,10 @@ class LogoutWidget extends StatelessWidget {
     return Tooltip(
       margin: const EdgeInsets.only(top: 5),
       height: 34,
+      waitDuration: const Duration(milliseconds: 350),
+      exitDuration: const Duration(milliseconds: 150),
+      showDuration: const Duration(milliseconds: 350),
+      enableTapToDismiss: true,
       message: 'Logout',
       decoration: BoxDecoration(
           color: ColorManager.red, borderRadius: BorderRadius.circular(4)),
@@ -27,7 +31,7 @@ class LogoutWidget extends StatelessWidget {
                 context, RouteManager.login, (route) => false);
             customSnackBar(context, 'Logout Successfully!');
           }
-    
+
           if (state is LogoutFailure) {
             customSnackBar(context, 'There was an error!');
           }

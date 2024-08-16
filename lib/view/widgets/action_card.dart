@@ -23,7 +23,7 @@ class ActionCard extends StatefulWidget {
 }
 
 class _ActionCardState extends State<ActionCard> {
-  PizzaSize _selectedSize = PizzaSize.m;
+  PizzaSize _selectedSize = PizzaSize.s;
 
   @override
   Widget build(BuildContext context) {

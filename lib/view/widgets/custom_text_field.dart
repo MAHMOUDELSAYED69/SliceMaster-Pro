@@ -32,6 +32,7 @@ class MyTextFormField extends StatelessWidget {
   final bool? obscureText;
   final String? initialValue;
   final bool? validateWithoutText;
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(

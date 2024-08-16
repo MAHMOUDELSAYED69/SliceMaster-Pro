@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -22,19 +24,19 @@ class InvoiceCard extends StatefulWidget {
 class _InvoiceCardState extends State<InvoiceCard> {
   late GlobalKey<FormState> _formkey;
   String? _customerName;
+  late TextEditingController _discountController;
 
   @override
   void initState() {
     _formkey = GlobalKey<FormState>();
+    _discountController = TextEditingController();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    const border = BorderSide(width: 1, color: ColorManager.orange);
-
-    final calculator = context.cubit<CalculatorCubit>();
-    final invoice = context.cubit<InvoiceCubit>();
+    final calculator = context.read<CalculatorCubit>();
+    final invoice = context.read<InvoiceCubit>();
 
     return Container(
       margin: EdgeInsets.only(right: context.width * 0.04),
@@ -54,7 +56,7 @@ class _InvoiceCardState extends State<InvoiceCard> {
               SizedBox(
                 width: context.width / 5,
                 child: SvgPicture.asset(
-                  ImageManager.logo,
+                  ImageManager.logoSVG,
                 ),
               ),
               SizedBox(height: 25.h),
@@ -66,103 +68,129 @@ class _InvoiceCardState extends State<InvoiceCard> {
                           entry.value.values.any((count) => count > 0))
                       .toList();
 
-                  return Form(
-                    key: _formkey,
-                    child: Column(
-                      children: [
-                        Table(
-                          border: TableBorder.all(),
-                          children: [
-                            TableRow(
-                              children: [
-                                _invoiceText('Item'),
-                                _invoiceText('Quantity'),
-                                _invoiceText('Price'),
-                                _invoiceText('Total'),
-                              ],
-                            ),
-                            // Table rows
-                            ...filteredPizzaCounts.expand((entry) {
-                              final pizza = entry.key;
-                              final sizeCounts = entry.value;
+                  return Column(
+                    children: [
+                      Table(
+                        border: TableBorder.all(),
+                        children: [
+                          TableRow(
+                            children: [
+                              _invoiceText('Item'),
+                              _invoiceText('Quantity'),
+                              _invoiceText('Price'),
+                              _invoiceText('Total'),
+                            ],
+                          ),
+                          // Table rows
+                          ...filteredPizzaCounts.expand((entry) {
+                            final pizza = entry.key;
+                            final sizeCounts = entry.value;
 
-                              return sizeCounts.entries
-                                  .where((sizeEntry) => sizeEntry.value > 0)
-                                  .map((sizeEntry) {
-                                final size = sizeEntry.key;
-                                final count = sizeEntry.value;
-                                final price =
-                                    calculator.getPizzaPrice(pizza, size);
-                                final totalPrice = price * count;
-                                return TableRow(
-                                  children: [
-                                    _invoiceText(
-                                        '${pizza.name} (${size.toString().split('.').last})'),
-                                    _invoiceText(count.toString()),
-                                    _invoiceText(price.toStringAsFixed(2)),
-                                    _invoiceText(totalPrice.toStringAsFixed(2)),
-                                  ],
-                                );
-                              }).toList();
-                            }),
-                          ],
+                            return sizeCounts.entries
+                                .where((sizeEntry) => sizeEntry.value > 0)
+                                .map((sizeEntry) {
+                              final size = sizeEntry.key;
+                              final count = sizeEntry.value;
+                              final price =
+                                  calculator.getPizzaPrice(pizza, size);
+                              final totalPrice = price * count;
+                              return TableRow(
+                                children: [
+                                  _invoiceText(
+                                      '${pizza.name} (${size.toString().split('.').last})'),
+                                  _invoiceText(count.toString()),
+                                  _invoiceText(price.toStringAsFixed(2)),
+                                  _invoiceText(totalPrice.toStringAsFixed(2)),
+                                ],
+                              );
+                            }).toList();
+                          }),
+                        ],
+                      ),
+                      SizedBox(height: 3.h),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: _invoiceText(
+                          'Total Amount: ${calculator.getTotalPrice(
+                                discount: (_discountController.text.isNotEmpty)
+                                    ? num.parse(_discountController.text)
+                                    : 0,
+                              ).toStringAsFixed(2)} EGP',
                         ),
-                        SizedBox(height: 3.h),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: _invoiceText(
-                            'Total Amount: ${calculator.getTotalPrice().toStringAsFixed(2)} EGP',
+                      ),
+                      if (calculator.getTotalPrice() == 0.0)
+                        SizedBox(
+                          height: context.height / 2.45,
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 3.h),
+                            child: const Placeholder(
+                              strokeWidth: 1.1,
+                              color: ColorManager.black,
+                            ),
                           ),
                         ),
-                        if (calculator.getTotalPrice() == 0.0)
-                          SizedBox(
-                            height: context.height / 2.45,
-                            child: Padding(
-                              padding: EdgeInsets.only(top: 3.h),
-                              child: const Placeholder(
-                                strokeWidth: 1.1,
-                                color: ColorManager.black,
+                      Row(
+                        children: [
+                          Expanded(
+                            flex: 3,
+                            child: Form(
+                              key: _formkey,
+                              child: MyTextFormField(
+                                validateWithoutText: true,
+                                hintText: 'Customer Name',
+                                onSaved: (data) => _customerName = data,
                               ),
                             ),
                           ),
-                        MyTextFormField(
-                          hintText: 'Customer Name',
-                          onSaved: (data) => _customerName = data,
-                        ),
-                        SizedBox(height: 10.h),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            MyElevatedButton(
-                              title: 'Get Invoice',
-                              onPressed: () {
-                                if (_formkey.currentState?.validate() ??
-                                    false) {
-                                  _formkey.currentState?.save();
-                                  invoice.generateInvoice(
+                          SizedBox(width: 1.w),
+                          Expanded(
+                            child: MyTextFormField(
+                              controller: _discountController,
+                              hintText: 'Discount',
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10.h),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          MyElevatedButton(
+                            title: 'Get Invoice',
+                            onPressed: () {
+                              if (_formkey.currentState?.validate() ?? false) {
+                                _formkey.currentState?.save();
+                                num discount = 0;
+                                if (_discountController.text.isNotEmpty) {
+                                  discount =
+                                      num.parse(_discountController.text);
+                                      log(discount.toString());
+                                }
+
+                                invoice.generateInvoice(
                                     pizzaCounts: pizzaCounts,
                                     customerName: _customerName!,
-                                  );
-                                  calculator.reset();
-                                  _formkey.currentState?.reset();
-                                }
-                              },
-                            ),
-                            SizedBox(width: 5.w),
-                            IconButton(
-                              onPressed: () {
+                                    discount: discount);
                                 calculator.reset();
+                                _discountController.clear();
                                 _formkey.currentState?.reset();
-                              },
-                              icon: const Icon(
-                                Icons.refresh,
-                                color: ColorManager.black,
-                              ),
+                              }
+                            },
+                          ),
+                          SizedBox(width: 5.w),
+                          IconButton(
+                            onPressed: () {
+                              calculator.reset();
+                              _formkey.currentState?.reset();
+                            },
+                            icon: const Icon(
+                              Icons.refresh,
+                              color: ColorManager.black,
                             ),
-                          ],
-                        ),
-                      ],
-                    ),
+                          ),
+                        ],
+                      ),
+                    ],
                   );
                 },
               ),
