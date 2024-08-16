@@ -24,15 +24,19 @@ class PizzaManagmentScreen extends StatefulWidget {
 
 class _PizzaManagmentScreenState extends State<PizzaManagmentScreen> {
   File? _pickedImage;
-  late TextEditingController _nameController;
-  late TextEditingController _priceController;
-
+  late GlobalKey<FormState> _addNewItemFormKey;
+  late GlobalKey<FormState> _updatePriceFormKey;
   @override
   void initState() {
-    _nameController = TextEditingController();
-    _priceController = TextEditingController();
+    _addNewItemFormKey = GlobalKey<FormState>();
+    _updatePriceFormKey = GlobalKey<FormState>();
     super.initState();
   }
+
+  num? _smallPrice;
+  num? _mediumPrice;
+  num? _largePrice;
+  String? _pizzaName;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +44,7 @@ class _PizzaManagmentScreenState extends State<PizzaManagmentScreen> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: SvgPicture.asset(
-          ImageManager.logo,
+          ImageManager.logoSVG,
           width: context.width * 0.15,
         ),
         actions: [
@@ -89,8 +93,6 @@ class _PizzaManagmentScreenState extends State<PizzaManagmentScreen> {
                               RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10)),
-                                // side: BorderSide(
-                                //     width: 1.2, color: ColorManager.offWhite2),
                               ),
                             ),
                             overlayColor: const WidgetStatePropertyAll(
@@ -137,9 +139,6 @@ class _PizzaManagmentScreenState extends State<PizzaManagmentScreen> {
               width: context.width / 3,
               height: context.height / 1.2,
               decoration: BoxDecoration(
-                // border: const Border.symmetric(
-                //   vertical: BorderSide(width: 2, color: ColorManager.darkGrey),
-                // ),
                 color: ColorManager.offWhite2.withOpacity(0.6),
                 boxShadow: ShadowManager.shadow,
                 borderRadius:
@@ -160,34 +159,59 @@ class _PizzaManagmentScreenState extends State<PizzaManagmentScreen> {
   }
 
   Widget _buildPizzaForm(BuildContext context) {
-    return SizedBox(
-      width: context.width / 3,
+    return Form(
+      key: _addNewItemFormKey,
       child: Column(
         children: [
           MyTextFormField(
-            controller: _nameController,
+            validateWithoutText: true,
             hintText: 'Pizza Name',
+            onSaved: (value) => _pizzaName = value!,
           ),
-          MyTextFormField(
-            controller: _priceController,
-            keyboardType: TextInputType.number,
-            hintText: 'Price',
+          SizedBox(
+            width: context.width * 0.2,
+            child: Row(
+              children: [
+                Expanded(
+                  child: MyTextFormField(
+                    validateWithoutText: true,
+                    keyboardType: TextInputType.number,
+                    hintText: 'Small Price',
+                    onSaved: (value) => _smallPrice = num.parse(value!),
+                  ),
+                ),
+                Expanded(
+                  child: MyTextFormField(
+                    validateWithoutText: true,
+                    keyboardType: TextInputType.number,
+                    hintText: 'Medium Price',
+                    onSaved: (value) => _mediumPrice = num.parse(value!),
+                  ),
+                ),
+                Expanded(
+                  child: MyTextFormField(
+                    validateWithoutText: true,
+                    keyboardType: TextInputType.number,
+                    hintText: 'Large Price',
+                    onSaved: (value) => _largePrice = num.parse(value!),
+                  ),
+                ),
+              ],
+            ),
           ),
           SizedBox(height: 20.h),
           MyElevatedButton(
             title: 'Add Pizza',
             onPressed: () {
-              if (_nameController.text.isNotEmpty &&
-                  _priceController.text.isNotEmpty &&
+              if (_addNewItemFormKey.currentState!.validate() &&
                   _pickedImage != null) {
-                final name = _nameController.text;
-                final price = int.tryParse(_priceController.text) ?? 0;
+                _addNewItemFormKey.currentState?.save();
                 final image = _pickedImage!.path;
                 context.cubit<PizzasRepositoryCubit>().addUserPizza(
-                      name: name,
-                      largePrice: price,
-                      mediumPrice: price,
-                      smallPrice: price,
+                      name: _pizzaName!,
+                      largePrice: _smallPrice!,
+                      mediumPrice: _mediumPrice!,
+                      smallPrice: _largePrice!,
                       image: image,
                     );
                 _clearForm();
@@ -228,13 +252,16 @@ class _PizzaManagmentScreenState extends State<PizzaManagmentScreen> {
         mainAxisSize: MainAxisSize.min,
         children: [
           IconButton(
+            style: context.theme.iconButtonTheme.style,
             icon: Icon(
               Icons.edit,
               color: context.iconTheme.color,
             ),
             onPressed: () => _showUpdatePriceDialog(pizza),
           ),
+          SizedBox(width: 5.w),
           IconButton(
+            style: context.theme.iconButtonTheme.style,
             icon: Icon(
               Icons.delete,
               color: context.iconTheme.color,
@@ -247,59 +274,89 @@ class _PizzaManagmentScreenState extends State<PizzaManagmentScreen> {
   }
 
   void _showUpdatePriceDialog(PizzaModel pizza) {
-    TextEditingController priceController = TextEditingController();
     showDialog(
       context: context,
       builder: (BuildContext dialogContext) {
-        return AlertDialog(
-          backgroundColor: ColorManager.white,
-          title: Text(
-            'Update Price for ${pizza.name}',
-            style: context.textTheme.bodyLarge,
-          ),
-          content: MyTextFormField(
-            controller: priceController,
-            keyboardType: TextInputType.number,
-            hintText: 'Enter new price',
-          ),
-          actions: <Widget>[
-            TextButton(
-              style: ButtonStyle(
-                overlayColor: WidgetStatePropertyAll(
-                    ColorManager.correct.withOpacity(0.3)),
-              ),
-              onPressed: () {
-                Navigator.of(dialogContext).pop();
-              },
-              child: Text(
-                'Cancel',
-                style: context.textTheme.displayMedium
-                    ?.copyWith(color: ColorManager.correct),
+        return Form(
+          key: _updatePriceFormKey,
+          child: AlertDialog(
+            backgroundColor: ColorManager.white,
+            title: Text(
+              'Update Price for ${pizza.name}',
+              style: context.textTheme.bodyLarge,
+            ),
+            content: SizedBox(
+              width: context.width * 0.2,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: MyTextFormField(
+                      validateWithoutText: true,
+                      keyboardType: TextInputType.number,
+                      hintText: 'Small Price',
+                      onSaved: (value) => _smallPrice = num.parse(value!),
+                    ),
+                  ),
+                  Expanded(
+                    child: MyTextFormField(
+                      validateWithoutText: true,
+                      keyboardType: TextInputType.number,
+                      hintText: 'Medium Price',
+                      onSaved: (value) => _mediumPrice = num.parse(value!),
+                    ),
+                  ),
+                  Expanded(
+                    child: MyTextFormField(
+                      validateWithoutText: true,
+                      keyboardType: TextInputType.number,
+                      hintText: 'Large Price',
+                      onSaved: (value) => _largePrice = num.parse(value!),
+                    ),
+                  ),
+                ],
               ),
             ),
-            TextButton(
-              style: ButtonStyle(
-                overlayColor:
-                    WidgetStatePropertyAll(ColorManager.red.withOpacity(0.3)),
+            actions: <Widget>[
+              TextButton(
+                style: ButtonStyle(
+                  overlayColor: WidgetStatePropertyAll(
+                      ColorManager.correct.withOpacity(0.3)),
+                ),
+                onPressed: () {
+                  Navigator.of(dialogContext).pop();
+                },
+                child: Text(
+                  'Cancel',
+                  style: context.textTheme.displayMedium
+                      ?.copyWith(color: ColorManager.correct),
+                ),
               ),
-              onPressed: () {
-                num newPrice =
-                    num.tryParse(priceController.text) ?? pizza.mediumPrice;
-                context.cubit<PizzasRepositoryCubit>().updatePizzaPrice(
-                      pizza: pizza,
-                      newLargePrice: newPrice,
-                      newMediumPrice: newPrice,
-                      newSmallPrice: newPrice,
-                    );
-                Navigator.of(dialogContext).pop();
-              },
-              child: Text(
-                'Update',
-                style: context.textTheme.displayMedium
-                    ?.copyWith(color: ColorManager.red),
+              TextButton(
+                style: ButtonStyle(
+                  overlayColor:
+                      WidgetStatePropertyAll(ColorManager.red.withOpacity(0.3)),
+                ),
+                onPressed: () {
+                  if (_updatePriceFormKey.currentState!.validate()) {
+                    _updatePriceFormKey.currentState?.save();
+                    context.cubit<PizzasRepositoryCubit>().updatePizzaPrice(
+                          pizza: pizza,
+                          newLargePrice: _smallPrice!,
+                          newMediumPrice: _mediumPrice!,
+                          newSmallPrice: _largePrice!,
+                        );
+                    _clearForm();
+                    Navigator.of(dialogContext).pop();
+                  }
+                },
+                child: Text(
+                  'Update',
+                  style: context.textTheme.displayMedium
+                      ?.copyWith(color: ColorManager.red),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         );
       },
     );
@@ -357,8 +414,7 @@ class _PizzaManagmentScreenState extends State<PizzaManagmentScreen> {
   }
 
   void _clearForm() {
-    _nameController.clear();
-    _priceController.clear();
+    _addNewItemFormKey.currentState?.reset();
     setState(() {
       _pickedImage = null;
     });

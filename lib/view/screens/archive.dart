@@ -41,7 +41,7 @@ class ArchiveScreen extends StatelessWidget {
           SizedBox(width: 5.w),
         ],
         title: SvgPicture.asset(
-          ImageManager.logo,
+          ImageManager.logoSVG,
           width: context.width * 0.15,
         ),
       ),

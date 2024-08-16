@@ -55,7 +55,7 @@ abstract class AppTheme {
           fixedSize: Size(double.maxFinite, 35.h),
         ),
       ),
-      iconTheme: IconThemeData(color: ColorManager.orange, size: 7.sp),
+      iconTheme: IconThemeData(color: ColorManager.black, size: 7.sp),
       fontFamily: FontFamilyManager.kQuicksand,
       useMaterial3: true,
       brightness: Brightness.light,

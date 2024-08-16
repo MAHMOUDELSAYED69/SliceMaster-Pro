@@ -26,7 +26,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: SvgPicture.asset(
-          ImageManager.logo,
+          ImageManager.logoSVG,
           width: context.width * 0.15,
         ),
         actions: [
@@ -38,7 +38,7 @@ class HomeScreen extends StatelessWidget {
           ),
           SizedBox(width: 5.w),
           IconButton(
-            onPressed: ()=> Navigator.pushNamed(context, RouteManager.archive),
+            onPressed: () => Navigator.pushNamed(context, RouteManager.archive),
             icon: const Icon(Icons.inventory),
           ),
           SizedBox(width: 5.w),
@@ -77,6 +77,15 @@ class HomeScreen extends StatelessWidget {
                       ),
                       itemBuilder: (context, index) {
                         final pizza = userPizzaList[index];
+                        final prices = {
+                          PizzaSize.s:
+                              calculator.getPizzaPrice(pizza, PizzaSize.s),
+                          PizzaSize.m:
+                              calculator.getPizzaPrice(pizza, PizzaSize.m),
+                          PizzaSize.l:
+                              calculator.getPizzaPrice(pizza, PizzaSize.l),
+                        };
+
                         return Stack(
                           alignment: Alignment.center,
                           children: [
@@ -101,15 +110,16 @@ class HomeScreen extends StatelessWidget {
                               ),
                             ),
                             ItemCard(
-                              price: pizza.mediumPrice,
+                              prices: prices,
                               name: pizza.name,
                             ),
                             ActionCard(
+                              pizza: pizza,
                               onDecrement: () => calculator.decrement(pizza),
                               onIncrement: () => calculator.increment(pizza),
                             ),
                           ],
-                        );  
+                        );
                       },
                     ),
                   ),
