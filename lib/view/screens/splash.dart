@@ -51,7 +51,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 width: context.width / 3,
                 height: context.height / 3,
                 child: SvgPicture.asset(
-                  ImageManager.logo,
+                  ImageManager.logoSVG,
                 ),
               ),
               Image.asset(

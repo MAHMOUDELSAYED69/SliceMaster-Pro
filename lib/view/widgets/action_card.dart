@@ -2,29 +2,35 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:slice_master_pro/utils/extentions/extentions.dart';
 
+import '../../model/pizza.dart';
 import '../../utils/constants/colors.dart';
+import '../../viewmodel/calc/calccubit_cubit.dart';
 
 class ActionCard extends StatefulWidget {
   const ActionCard({
     super.key,
-    this.onIncrement,
-    this.onDecrement,
+    required this.onIncrement,
+    required this.onDecrement,
+    required this.pizza,
   });
-  final void Function()? onIncrement;
-  final void Function()? onDecrement;
+
+  final VoidCallback onIncrement;
+  final VoidCallback onDecrement;
+  final PizzaModel pizza;
 
   @override
   State<ActionCard> createState() => _ActionCardState();
 }
 
 class _ActionCardState extends State<ActionCard> {
-  PizzaSize? _selectedSize = PizzaSize.S;
+  PizzaSize _selectedSize = PizzaSize.m;
+
   @override
   Widget build(BuildContext context) {
-    const white = ColorManager.white;
-    const black = ColorManager.black;
     return Positioned(
       bottom: 10,
+      right: 15,
+      left: 15,
       child: Container(
         height: 15.sp,
         decoration: BoxDecoration(
@@ -34,64 +40,41 @@ class _ActionCardState extends State<ActionCard> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            const SizedBox(width: 10),
+            // Size selection
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: PizzaSize.values.map((PizzaSize size) {
+              children: PizzaSize.values.map((size) {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(size.name,
+                    Text(size.name.toUpperCase(),
                         style: context.textTheme.displaySmall
                             ?.copyWith(color: ColorManager.white)),
                     Radio<PizzaSize>(
-                      activeColor: white,
-                      hoverColor: ColorManager.white.withOpacity(0.05),
+                      activeColor: ColorManager.white,
                       value: size,
                       groupValue: _selectedSize,
                       onChanged: (PizzaSize? value) {
-                        setState(() {
-                          _selectedSize = value;
-                        });
+                        context.cubit<CalculatorCubit>().setSize(value!);
+                        _selectedSize = value;
+                        setState(() {});
                       },
                     ),
                   ],
                 );
               }).toList(),
             ),
-            const SizedBox(width: 10),
             IconButton(
-              hoverColor: white,
-              splashColor: white,
               onPressed: widget.onIncrement,
-              icon: Icon(Icons.add, color: black, size: 7.sp),
+              icon: Icon(Icons.add, size: 7.sp),
             ),
-            const SizedBox(width: 10),
             IconButton(
-              hoverColor: white,
-              splashColor: white,
               onPressed: widget.onDecrement,
-              icon: Icon(Icons.remove, color: black, size: 7.sp),
+              icon: Icon(Icons.remove, size: 7.sp),
             ),
-            const SizedBox(width: 10),
           ],
         ),
       ),
     );
-  }
-}
-
-enum PizzaSize { S, M, L }
-
-extension PizzaSizeExtension on PizzaSize {
-  String get name {
-    switch (this) {
-      case PizzaSize.S:
-        return 'S';
-      case PizzaSize.M:
-        return 'M';
-      case PizzaSize.L:
-        return 'L';
-    }
   }
 }

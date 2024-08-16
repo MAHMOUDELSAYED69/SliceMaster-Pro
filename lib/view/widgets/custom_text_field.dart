@@ -18,6 +18,7 @@ class MyTextFormField extends StatelessWidget {
     this.title,
     this.obscureText,
     this.initialValue,
+    this.validateWithoutText,
   });
   final String? hintText;
   final String? label;
@@ -30,6 +31,7 @@ class MyTextFormField extends StatelessWidget {
   final String? title;
   final bool? obscureText;
   final String? initialValue;
+  final bool? validateWithoutText;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -65,19 +67,30 @@ class MyTextFormField extends StatelessWidget {
           keyboardType: keyboardType,
           controller: controller,
           obscureText: obscureText ?? false,
-          validator: validator ??
-              (value) {
-                if (value!.isEmpty) {
-                  return title?.isNotEmpty ?? false
-                      ? "$title cannot be empty"
-                      : "Field cannot be empty";
-                } else {
-                  return null;
+          validator: validateWithoutText == true
+              ? (value) {
+                  if (value!.isEmpty) {
+                    return "";
+                  } else {
+                    return null;
+                  }
                 }
-              },
+              : validator ??
+                  (value) {
+                    if (value!.isEmpty) {
+                      return title?.isNotEmpty ?? false
+                          ? "$title cannot be empty"
+                          : "Field cannot be empty";
+                    } else {
+                      return null;
+                    }
+                  },
           onFieldSubmitted: onFieldSubmitted,
           onSaved: onSaved,
           decoration: InputDecoration(
+            errorStyle: validateWithoutText == true
+                ? context.textTheme.displaySmall?.copyWith(fontSize: 0)
+                : null,
             isCollapsed: true,
             isDense: true,
             hintText: hintText,
