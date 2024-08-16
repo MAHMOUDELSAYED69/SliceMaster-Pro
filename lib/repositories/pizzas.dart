@@ -85,7 +85,7 @@ class PizzasRepository {
     required String formattedDate,
     required String formattedTime,
     required double totalAmount,
-    required double discount, // Add discount parameter
+    required num discount,
     required String items,
     required String userName,
   }) async {
