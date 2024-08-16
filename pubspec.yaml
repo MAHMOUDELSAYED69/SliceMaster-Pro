@@ -49,10 +49,15 @@ dependencies:
   window_manager: ^0.4.0
 
 dev_dependencies:
+  flutter_launcher_icons: "^0.13.1"
   flutter_lints: ^3.0.0
   flutter_test:
     sdk: flutter
-
+flutter_launcher_icons:
+  windows:
+    generate: true
+    image_path: "assets/images/slice_icon.png"
+    icon_size: 48 # min:48, max:256, default: 48
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter packages.
