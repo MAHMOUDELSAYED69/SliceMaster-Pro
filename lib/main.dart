@@ -15,12 +15,12 @@ Future<void> main() async {
   databaseFactory = databaseFactoryFfi;
   if (Platform.isWindows) {
     await windowManager.ensureInitialized();
-
+  
     WindowOptions windowOptions = const WindowOptions(
       size: Size(1280, 800),
       center: true,
       backgroundColor: Colors.transparent,
-      title: 'Slice Master Pro',
+      title: 'SliceMaster Pro',
       titleBarStyle: TitleBarStyle.normal,
     );
 
@@ -28,7 +28,7 @@ Future<void> main() async {
       await windowManager.show();
       await windowManager.focus();
       await windowManager.setResizable(true);
-      await windowManager.setMinimumSize(const Size(1024, 768));
+      await windowManager.setMinimumSize(const  Size(1280, 800));
     });
   }
   await SqlDb().initializeDatabase();

@@ -86,16 +86,33 @@ class SqlDb {
 
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
     if (oldVersion < 2) {
-      // Upgrade from version 1 to 2: Add new columns to the 'Pizzas' table
+      // Other upgrade operations
       await db.execute('''
-        ALTER TABLE Pizzas ADD COLUMN smallPrice REAL NOT NULL DEFAULT 0;
-      ''');
+      ALTER TABLE invoices RENAME TO invoices_old;
+    ''');
       await db.execute('''
-        ALTER TABLE Pizzas ADD COLUMN mediumPrice REAL NOT NULL DEFAULT 0;
-      ''');
+      CREATE TABLE invoices (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        invoice_number INTEGER NOT NULL,
+        customer_name TEXT NOT NULL,
+        date TEXT NOT NULL,
+        time TEXT NOT NULL,
+        total_amount REAL NOT NULL,
+        discount REAL NOT NULL DEFAULT 0,
+        items TEXT,
+        username TEXT NOT NULL,
+        FOREIGN KEY (username) REFERENCES users(username)
+      )
+    ''');
       await db.execute('''
-        ALTER TABLE Pizzas ADD COLUMN largePrice REAL NOT NULL DEFAULT 0;
-      ''');
+      INSERT INTO invoices (
+        id, invoice_number, customer_name, date, time, total_amount, discount, items, username)
+        SELECT id, invoice_number, customer_name, date, time, total_amount, 0, items, username
+        FROM invoices_old;
+    ''');
+      await db.execute('''
+      DROP TABLE invoices_old;
+    ''');
     }
   }
 

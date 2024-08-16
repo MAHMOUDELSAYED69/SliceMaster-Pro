@@ -68,9 +68,6 @@ abstract class AppRouter {
               BlocProvider(
                 create: (context) => PickImageCubit(),
               ),
-              BlocProvider(
-                create: (context) => AuthStatusCubit(),
-              ),
             ],
             child: const PizzaManagmentScreen(),
           ),

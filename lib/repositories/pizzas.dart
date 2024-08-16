@@ -33,9 +33,9 @@ class PizzasRepository {
     List<PizzaModel> userPizzas = data
             ?.map((item) => PizzaModel(
                   name: item['name'] as String,
-                  smallPrice: item['smallPrice'] as int,
-                  mediumPrice: item['mediumPrice'] as int,
-                  largePrice: item['largePrice'] as int,
+                  smallPrice: item['smallPrice'] as num,
+                  mediumPrice: item['mediumPrice'] as num,
+                  largePrice: item['largePrice'] as num,
                   image: item['image'] as String,
                 ))
             .toList() ??
@@ -85,13 +85,14 @@ class PizzasRepository {
     required String formattedDate,
     required String formattedTime,
     required double totalAmount,
+    required double discount, // Add discount parameter
     required String items,
     required String userName,
   }) async {
     final data = '''
-    INSERT INTO invoices (invoice_number, customer_name, date, time, total_amount, items, username)
-    VALUES ("$invoiceNumber", "$customerName", "$formattedDate", "$formattedTime", $totalAmount, "$items", "$userName")
-    ''';
+  INSERT INTO invoices (invoice_number, customer_name, date, time, total_amount, discount, items, username)
+  VALUES ("$invoiceNumber", "$customerName", "$formattedDate", "$formattedTime", $totalAmount, $discount, "$items", "$userName")
+  ''';
     await _sqlDb.insertData(data: data);
   }
 }
