@@ -14,6 +14,7 @@ import '../../utils/constants/colors.dart';
 import '../../viewmodel/calc/calccubit_cubit.dart';
 import '../../viewmodel/repository/pizza_cubit.dart';
 import '../widgets/action_card.dart';
+import '../widgets/icon_button_tooltip.dart';
 import '../widgets/invoice_card.dart';
 import '../widgets/item_card.dart';
 
@@ -31,15 +32,17 @@ class HomeScreen extends StatelessWidget {
         ),
         actions: [
           SizedBox(width: 5.w),
-          IconButton(
+          IconButtonWithTooltip(
             onPressed: () =>
                 Navigator.pushNamed(context, RouteManager.pizzaManagement),
-            icon: const Icon(Icons.local_pizza),
+            iconData: Icons.local_pizza,
+            message: 'Pizza Management',
           ),
           SizedBox(width: 5.w),
-          IconButton(
+          IconButtonWithTooltip(
             onPressed: () => Navigator.pushNamed(context, RouteManager.archive),
-            icon: const Icon(Icons.inventory),
+            message: 'Archive',
+            iconData: Icons.inventory,
           ),
           SizedBox(width: 5.w),
           const LogoutWidget(),

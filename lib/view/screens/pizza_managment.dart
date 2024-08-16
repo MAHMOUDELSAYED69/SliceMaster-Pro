@@ -14,6 +14,7 @@ import '../../utils/helpers/my_snackbar.dart';
 import '../../viewmodel/image/image_cubit.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_text_field.dart';
+import '../widgets/icon_button_tooltip.dart';
 
 class PizzaManagmentScreen extends StatefulWidget {
   const PizzaManagmentScreen({super.key});
@@ -48,9 +49,10 @@ class _PizzaManagmentScreenState extends State<PizzaManagmentScreen> {
           width: context.width * 0.15,
         ),
         actions: [
-          IconButton(
+          IconButtonWithTooltip(
             onPressed: () => Navigator.pop(context),
-            icon: const Icon(Icons.arrow_back),
+            iconData: Icons.arrow_back,
+            message: 'Back',
           ),
           SizedBox(width: 5.w),
         ],
@@ -161,16 +163,23 @@ class _PizzaManagmentScreenState extends State<PizzaManagmentScreen> {
   Widget _buildPizzaForm(BuildContext context) {
     return Form(
       key: _addNewItemFormKey,
-      child: Column(
-        children: [
-          MyTextFormField(
-            validateWithoutText: true,
-            hintText: 'Pizza Name',
-            onSaved: (value) => _pizzaName = value!,
-          ),
-          SizedBox(
-            width: context.width * 0.2,
-            child: Row(
+      child: SizedBox(
+        width: context.width * 0.25,
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: MyTextFormField(
+                    validateWithoutText: true,
+                    hintText: 'Pizza Name',
+                    onSaved: (value) => _pizzaName = value!,
+                  ),
+                ),
+              ],
+            ),
+            Row(
               children: [
                 Expanded(
                   child: MyTextFormField(
@@ -180,6 +189,7 @@ class _PizzaManagmentScreenState extends State<PizzaManagmentScreen> {
                     onSaved: (value) => _smallPrice = num.parse(value!),
                   ),
                 ),
+                SizedBox(width: 1.w),
                 Expanded(
                   child: MyTextFormField(
                     validateWithoutText: true,
@@ -188,6 +198,7 @@ class _PizzaManagmentScreenState extends State<PizzaManagmentScreen> {
                     onSaved: (value) => _mediumPrice = num.parse(value!),
                   ),
                 ),
+                SizedBox(width: 1.w),
                 Expanded(
                   child: MyTextFormField(
                     validateWithoutText: true,
@@ -198,27 +209,27 @@ class _PizzaManagmentScreenState extends State<PizzaManagmentScreen> {
                 ),
               ],
             ),
-          ),
-          SizedBox(height: 20.h),
-          MyElevatedButton(
-            title: 'Add Pizza',
-            onPressed: () {
-              if (_addNewItemFormKey.currentState!.validate() &&
-                  _pickedImage != null) {
-                _addNewItemFormKey.currentState?.save();
-                final image = _pickedImage!.path;
-                context.cubit<PizzasRepositoryCubit>().addUserPizza(
-                      name: _pizzaName!,
-                      largePrice: _smallPrice!,
-                      mediumPrice: _mediumPrice!,
-                      smallPrice: _largePrice!,
-                      image: image,
-                    );
-                _clearForm();
-              }
-            },
-          ),
-        ],
+            SizedBox(height: 20.h),
+            MyElevatedButton(
+              title: 'Add Pizza',
+              onPressed: () {
+                if (_addNewItemFormKey.currentState!.validate() &&
+                    _pickedImage != null) {
+                  _addNewItemFormKey.currentState?.save();
+                  final image = _pickedImage!.path;
+                  context.cubit<PizzasRepositoryCubit>().addUserPizza(
+                        name: _pizzaName!,
+                        largePrice: _smallPrice!,
+                        mediumPrice: _mediumPrice!,
+                        smallPrice: _largePrice!,
+                        image: image,
+                      );
+                  _clearForm();
+                }
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -297,6 +308,7 @@ class _PizzaManagmentScreenState extends State<PizzaManagmentScreen> {
                       onSaved: (value) => _smallPrice = num.parse(value!),
                     ),
                   ),
+                  SizedBox(width: 1.w),
                   Expanded(
                     child: MyTextFormField(
                       validateWithoutText: true,
@@ -305,6 +317,7 @@ class _PizzaManagmentScreenState extends State<PizzaManagmentScreen> {
                       onSaved: (value) => _mediumPrice = num.parse(value!),
                     ),
                   ),
+                  SizedBox(width: 1.w),
                   Expanded(
                     child: MyTextFormField(
                       validateWithoutText: true,
@@ -341,9 +354,9 @@ class _PizzaManagmentScreenState extends State<PizzaManagmentScreen> {
                     _updatePriceFormKey.currentState?.save();
                     context.cubit<PizzasRepositoryCubit>().updatePizzaPrice(
                           pizza: pizza,
-                          newLargePrice: _smallPrice!,
+                          newLargePrice: _largePrice!,
                           newMediumPrice: _mediumPrice!,
-                          newSmallPrice: _largePrice!,
+                          newSmallPrice: _smallPrice!,
                         );
                     _clearForm();
                     Navigator.of(dialogContext).pop();

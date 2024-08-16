@@ -18,9 +18,9 @@ class PizzasRepositoryCubit extends Cubit<List<PizzaModel>> {
 
   Future<void> addUserPizza({
     required String name,
-    required int smallPrice,
-    required int mediumPrice,
-    required int largePrice,
+    required num smallPrice,
+    required num mediumPrice,
+    required num largePrice,
     required String image,
   }) async {
     final username = await _getUsername();
