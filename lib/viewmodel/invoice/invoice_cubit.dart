@@ -23,35 +23,38 @@ class InvoiceCubit extends Cubit<InvoiceState> {
   Future<void> generateInvoice({
     required Map<PizzaModel, Map<PizzaSize, int>> pizzaCounts,
     required String customerName,
+    num? discount,
   }) async {
-    if (pizzaCounts == null || pizzaCounts.isEmpty) {
+    if (pizzaCounts.isEmpty) {
       emit(InvoiceError(errMessage: 'No pizza counts provided.'));
       return;
     }
-
     final pdf = pw.Document();
-    final textColor = PdfColor.fromHex('#352300');
+    final textColor = PdfColor.fromHex('#000000');
 
     final Uint8List logoBytes = await rootBundle
-        .load(ImageManager.splashImage)
+        .load(ImageManager.logoPNG)
         .then((value) => value.buffer.asUint8List());
 
     final List<List<String>> data = [];
     num totalAmount = 0;
-
     pizzaCounts.forEach((pizza, sizeCounts) {
       sizeCounts.forEach((size, count) {
         if (count > 0) {
+          String pizzaSize = '';
           num price;
           switch (size) {
-            case 'small':
+            case PizzaSize.s:
               price = pizza.smallPrice;
+              pizzaSize = 'S';
               break;
-            case 'medium':
+            case PizzaSize.m:
               price = pizza.mediumPrice;
+              pizzaSize = 'M';
               break;
-            case 'large':
+            case PizzaSize.l:
               price = pizza.largePrice;
+              pizzaSize = 'L';
               break;
             default:
               price = pizza.mediumPrice;
@@ -62,7 +65,7 @@ class InvoiceCubit extends Cubit<InvoiceState> {
           totalAmount += total;
 
           data.add([
-            '${pizza.name} ($size)',
+            '${pizza.name} ($pizzaSize)',
             price.toStringAsFixed(2),
             '0.00',
             '0.00',
@@ -99,7 +102,7 @@ class InvoiceCubit extends Cubit<InvoiceState> {
                 width: 200,
                 height: 200,
               ),
-              pw.SizedBox(height: 5),
+              pw.SizedBox(height: 20),
               pw.Text('City Road - empty',
                   style: pw.TextStyle(fontSize: 14, color: textColor)),
               pw.Text('Phone: 01061172139',
@@ -133,7 +136,7 @@ class InvoiceCubit extends Cubit<InvoiceState> {
               pw.SizedBox(height: 5),
               pw.Text('Customer Name: $customerName',
                   style: pw.TextStyle(
-                      fontSize: 18,
+                      fontSize: 16,
                       fontWeight: pw.FontWeight.bold,
                       color: textColor)),
               pw.SizedBox(height: 5),
@@ -148,10 +151,13 @@ class InvoiceCubit extends Cubit<InvoiceState> {
                   'Total (EGP)',
                   'Quantity'
                 ],
-                cellStyle: pw.TextStyle(color: textColor),
+                cellStyle: pw.TextStyle(
+                  color: textColor,
+                  fontSize: 14,
+                ),
                 headerStyle: pw.TextStyle(
                   color: textColor,
-                  fontSize: 16,
+                  fontSize: 10,
                   fontWeight: pw.FontWeight.bold,
                 ),
                 data: data,
@@ -185,15 +191,17 @@ class InvoiceCubit extends Cubit<InvoiceState> {
     );
 
     await PizzasRepository.instance.saveInvoice(
+      discount: discount ?? 10,
       invoiceNumber: invoiceNumber,
       customerName: customerName,
       formattedDate: formattedDate,
       formattedTime: formattedTime,
       items: pizzaCounts.entries
           .expand((entry) => entry.value.entries
-              .where((sizeEntry) => sizeEntry.value > 0)
-              .map((sizeEntry) =>
-                  '${entry.key.name} (${sizeEntry.key}) x${sizeEntry.value}'))
+                  .where((sizeEntry) => sizeEntry.value > 0)
+                  .map((sizeEntry) {
+                return '${entry.key.name} (${sizeEntry.key == PizzaSize.s ? 'Small' : sizeEntry.key == PizzaSize.m ? 'Medium' : sizeEntry.key == PizzaSize.m ? 'Large' : ''}) x${sizeEntry.value}';
+              }))
           .join(', '),
       totalAmount: totalAmount.toDouble(),
       userName: CacheData.getData(key: 'currentUser'),

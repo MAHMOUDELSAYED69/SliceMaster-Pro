@@ -1,12 +1,14 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:slice_master_pro/model/pizza.dart';
 
-enum PizzaSize { small, medium, large }
+enum PizzaSize { s, m, l }
 
 class CalculatorCubit extends Cubit<Map<PizzaModel, Map<PizzaSize, int>>> {
   CalculatorCubit() : super({});
 
-  PizzaSize selectedSize = PizzaSize.medium;
+  PizzaSize selectedSize = PizzaSize.s;
 
   void increment(PizzaModel pizza) {
     final currentSizeCount = state[pizza]?[selectedSize] ?? 0;
@@ -39,10 +41,8 @@ class CalculatorCubit extends Cubit<Map<PizzaModel, Map<PizzaSize, int>>> {
     emit({...state});
   }
 
-  void reset() => emit({});
-
-  double getTotalPrice() {
-    return state.entries.fold<double>(0, (sum, entry) {
+  double getTotalPrice({num? discount}) {
+    final total = state.entries.fold<double>(0, (sum, entry) {
       final pizza = entry.key;
       final sizeCounts = entry.value;
       return sum +
@@ -53,16 +53,26 @@ class CalculatorCubit extends Cubit<Map<PizzaModel, Map<PizzaSize, int>>> {
             return sizeSum + (price * count);
           });
     });
+
+    if (discount != null && discount > 0) {
+      final discountedTotal = total * ((100 - discount) / 100);
+         log(discountedTotal.toString());
+      return discountedTotal;
+    }
+
+    return total;
   }
 
   num getPizzaPrice(PizzaModel pizza, PizzaSize size) {
     switch (size) {
-      case PizzaSize.small:
+      case PizzaSize.s:
         return pizza.smallPrice;
-      case PizzaSize.medium:
+      case PizzaSize.m:
         return pizza.mediumPrice;
-      case PizzaSize.large:
+      case PizzaSize.l:
         return pizza.largePrice;
     }
   }
+
+  void reset() => emit({});
 }
