@@ -40,30 +40,7 @@ class _ActionCardState extends State<ActionCard> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            // Size selection
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: PizzaSize.values.map((size) {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(size.name.toUpperCase(),
-                        style: context.textTheme.displaySmall
-                            ?.copyWith(color: ColorManager.white)),
-                    Radio<PizzaSize>(
-                      activeColor: ColorManager.white,
-                      value: size,
-                      groupValue: _selectedSize,
-                      onChanged: (PizzaSize? value) {
-                        context.cubit<CalculatorCubit>().setSize(value!);
-                        _selectedSize = value;
-                        setState(() {});
-                      },
-                    ),
-                  ],
-                );
-              }).toList(),
-            ),
+            _buildPizzaSizeSelectors(),
             IconButton(
               onPressed: widget.onIncrement,
               icon: Icon(Icons.add, size: 7.sp),
@@ -74,6 +51,45 @@ class _ActionCardState extends State<ActionCard> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildPizzaSizeSelector(int index) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              PizzaSize.values[index].name.toUpperCase(),
+              style: context.textTheme.displaySmall
+                  ?.copyWith(color: ColorManager.white),
+            ),
+            Radio<PizzaSize>(
+              activeColor: ColorManager.white,
+              value: PizzaSize.values[index],
+              groupValue: _selectedSize,
+              onChanged: (PizzaSize? value) {
+                context.cubit<CalculatorCubit>().setSize(value!);
+                setState(() {
+                  _selectedSize = value;
+                });
+              },
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPizzaSizeSelectors() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List.generate(
+        PizzaSize.values.length,
+        (index) => _buildPizzaSizeSelector(index),
       ),
     );
   }
