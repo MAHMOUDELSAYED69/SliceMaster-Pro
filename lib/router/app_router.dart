@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:slice_master_pro/view/screens/home.dart';
-import 'package:slice_master_pro/view/screens/pizza_managment.dart';
+import 'package:slice_master_pro/view/screens/pizza_management.dart';
+import 'package:slice_master_pro/viewmodel/excel/excel_cubit.dart';
 import 'package:slice_master_pro/viewmodel/repository/pizza_cubit.dart';
 
 import '../utils/constants/routes.dart';
@@ -69,13 +70,17 @@ abstract class AppRouter {
                 create: (context) => PickImageCubit(),
               ),
             ],
-            child: const PizzaManagmentScreen(),
+            child: const PizzaManagementScreen(),
           ),
         );
       case RouteManager.archive:
         return PageTransitionManager.fadeTransition(
-          BlocProvider(
-            create: (context) => ArchiveCubit()..fetchInvoices(),
+          MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                  create: (context) => ArchiveCubit()..fetchInvoices()),
+              BlocProvider(create: (context) => ExcelCubit()),
+            ],
             child: const ArchiveScreen(),
           ),
         );

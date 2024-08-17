@@ -4,8 +4,10 @@ import 'package:slice_master_pro/utils/extentions/extentions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:slice_master_pro/viewmodel/excel/excel_cubit.dart';
 
 import '../../utils/constants/images.dart';
+import '../../utils/helpers/my_snackbar.dart';
 import '../../viewmodel/archive/archive_cubit.dart';
 import '../widgets/icon_button_tooltip.dart';
 
@@ -15,6 +17,7 @@ class ArchiveScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const border = BorderSide(width: 2, color: ColorManager.black);
+
     Widget invoiceText(String text) {
       return Padding(
         padding: const EdgeInsets.all(8.0),
@@ -37,6 +40,24 @@ class ArchiveScreen extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         actions: [
+          SizedBox(width: 5.w),
+          BlocListener<ExcelCubit, ExcelState>(
+            listener: (context, state) {
+              if (state is SavedToExcelSuccess) {
+                customSnackBar(context, state.message);
+              }
+              if (state is SavedToExcelFailure) {
+                customSnackBar(context, state.message);
+              }
+            },
+            child: IconButtonWithTooltip(
+              onPressed: () =>
+                  context.cubit<ExcelCubit>().saveInvoicesToExcel(),
+              iconData: Icons.save,
+              message: 'Save To Excel',
+            ),
+          ),
+          SizedBox(width: 5.w),
           IconButtonWithTooltip(
             onPressed: () => Navigator.pop(context),
             iconData: Icons.arrow_back,
@@ -60,28 +81,21 @@ class ArchiveScreen extends StatelessWidget {
               width: context.width * 0.2,
             ),
           ),
-          Positioned(
-            left: 5,
-            top: 5,
-            child: IconButton(
-              onPressed: () => Navigator.pop(context),
-              icon: const Icon(Icons.arrow_back),
-            ),
-          ),
           SizedBox(
             child: Column(
               children: [
                 Container(
-                  color: ColorManager.orange,
+                  color: ColorManager.orange.withOpacity(0.8),
                   child: Table(
                     border:
                         TableBorder.all(width: 2, color: ColorManager.black),
                     columnWidths: {
                       0: FixedColumnWidth(15.w),
-                      4: FixedColumnWidth(30.w),
+                      4: FixedColumnWidth(33.w),
                       1: FixedColumnWidth(60.w),
                       2: const FlexColumnWidth(),
                       3: FixedColumnWidth(55.w),
+                      5: FixedColumnWidth(30.w), // Added for Discount
                     },
                     children: [
                       TableRow(
@@ -90,6 +104,7 @@ class ArchiveScreen extends StatelessWidget {
                           headerText('Customer Name'),
                           headerText('Items'),
                           headerText('Date & Time'),
+                          headerText('Discount (%)'),
                           headerText('Total (EGP)'),
                         ],
                       ),
@@ -117,10 +132,11 @@ class ArchiveScreen extends StatelessWidget {
                                     ),
                                     columnWidths: {
                                       0: FixedColumnWidth(15.w),
-                                      4: FixedColumnWidth(30.w),
+                                      4: FixedColumnWidth(33.w),
                                       1: FixedColumnWidth(60.w),
                                       2: const FlexColumnWidth(),
                                       3: FixedColumnWidth(55.w),
+                                      5: FixedColumnWidth(30.w),
                                     },
                                     children: [
                                       TableRow(
@@ -131,6 +147,7 @@ class ArchiveScreen extends StatelessWidget {
                                           invoiceText(invoice.items),
                                           invoiceText(
                                               '${invoice.date} - ${invoice.time}'),
+                                          invoiceText('${invoice.discount} %'),
                                           invoiceText(
                                               '${invoice.totalAmount} EGP'),
                                         ],

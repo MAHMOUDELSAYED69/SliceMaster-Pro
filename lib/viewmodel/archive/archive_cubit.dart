@@ -1,4 +1,6 @@
+
 import 'package:bloc/bloc.dart';
+
 import 'package:meta/meta.dart';
 import 'package:slice_master_pro/repositories/pizzas.dart';
 
@@ -11,9 +13,14 @@ class ArchiveCubit extends Cubit<ArchiveState> {
   ArchiveCubit() : super(ArchiveInitial());
 
   Future<void> fetchInvoices() async {
-    emit(ArchiveLoading());
-    final List<InvoiceModel>? invoices = await PizzasRepository.instance
-        .getInvoices(CacheData.getData(key: 'currentUser'));
-    emit(ArchiveLoaded(list: invoices ?? []));
+    try {
+      emit(ArchiveLoading());
+      final List<InvoiceModel>? invoices = await PizzasRepository.instance
+          .getInvoices(CacheData.getData(key: 'currentUser'));
+      emit(ArchiveLoaded(list: invoices ?? []));
+    } catch (e) {
+      emit(ArchiveError(message: e.toString()));
+    }
   }
+
 }
