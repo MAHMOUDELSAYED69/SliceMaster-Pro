@@ -146,13 +146,7 @@ class _PizzaManagementScreenState extends State<PizzaManagementScreen> {
                 borderRadius:
                     const BorderRadius.vertical(bottom: Radius.circular(20)),
               ),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    _buildPizzaList(context),
-                  ],
-                ),
-              ),
+              child: _buildPizzaList(context),
             ),
           ),
         ],
@@ -219,9 +213,9 @@ class _PizzaManagementScreenState extends State<PizzaManagementScreen> {
                   final image = _pickedImage!.path;
                   context.cubit<PizzasRepositoryCubit>().addUserPizza(
                         name: _pizzaName!,
-                        largePrice: _smallPrice!,
+                        largePrice: _largePrice!,
                         mediumPrice: _mediumPrice!,
-                        smallPrice: _largePrice!,
+                        smallPrice: _smallPrice!,
                         image: image,
                       );
                   _clearForm();
@@ -237,47 +231,76 @@ class _PizzaManagementScreenState extends State<PizzaManagementScreen> {
   Widget _buildPizzaList(BuildContext context) {
     return BlocBuilder<PizzasRepositoryCubit, List<PizzaModel>>(
       builder: (context, pizzas) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: pizzas.map((pizza) => _buildPizzaItem(pizza)).toList(),
-        );
+        return ListView.separated(
+            itemBuilder: (context, index) => _buildPizzaItem(pizzas[index]),
+            separatorBuilder: (context, index) => const Divider(
+                  thickness: 3,
+                  color: ColorManager.offWhite2,
+                  endIndent: 10,
+                  indent: 10,
+                ),
+            itemCount: pizzas.length);
       },
     );
   }
 
   Widget _buildPizzaItem(PizzaModel pizza) {
-    return ListTile(
-      leading: CircleAvatar(
-        radius: 40,
-        backgroundImage: FileImage(File(pizza.image!)),
-      ),
-      title: Text(
-        pizza.name,
-        style: context.textTheme.bodyLarge,
-      ),
-      subtitle: Text(
-        '${pizza.mediumPrice} EGP',
-        style: context.textTheme.displayMedium,
-      ),
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      child: Row(
         children: [
-          IconButton(
-            style: context.theme.iconButtonTheme.style,
-            icon: Icon(
-              Icons.edit,
-              color: context.iconTheme.color,
+          Container(
+            width: 30.w,
+            height: 30.w,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              image: DecorationImage(
+                image: FileImage(
+                  File(pizza.image!),
+                ),
+                fit: BoxFit.cover,
+              ),
             ),
-            onPressed: () => _showUpdatePriceDialog(pizza),
           ),
-          SizedBox(width: 5.w),
-          IconButton(
-            style: context.theme.iconButtonTheme.style,
-            icon: Icon(
-              Icons.delete,
-              color: context.iconTheme.color,
+          SizedBox(width: 3.w),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  pizza.name,
+                  style: context.textTheme.bodyLarge,
+                ),
+                SizedBox(height: 1.h),
+                Text(
+                  '${pizza.smallPrice} , ${pizza.mediumPrice} , ${pizza.largePrice} EGP',
+                  style: context.textTheme.displayMedium,
+                ),
+              ],
             ),
-            onPressed: () => _showConfirmationDialog(pizza),
+          ),
+          SizedBox(width: 3.w),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              IconButton(
+                style: context.theme.iconButtonTheme.style,
+                icon: Icon(
+                  Icons.edit,
+                  color: context.iconTheme.color,
+                ),
+                onPressed: () => _showUpdatePriceDialog(pizza),
+              ),
+              SizedBox(width: 5.w),
+              IconButton(
+                style: context.theme.iconButtonTheme.style,
+                icon: Icon(
+                  Icons.delete,
+                  color: context.iconTheme.color,
+                ),
+                onPressed: () => _showConfirmationDialog(pizza),
+              ),
+            ],
           ),
         ],
       ),

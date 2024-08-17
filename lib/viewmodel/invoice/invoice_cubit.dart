@@ -71,8 +71,8 @@ class InvoiceCubit extends Cubit<InvoiceState> {
           data.add([
             '${pizza.name} ($pizzaSize)',
             price.toStringAsFixed(2),
-            (taxRate * 100).toStringAsFixed(2),
-            discount?.toStringAsFixed(2) ?? '0.00',
+            (taxRate * 100).toStringAsFixed(1),
+            discount?.toStringAsFixed(1) ?? '0.0',
             total.toStringAsFixed(2),
             count.toString(),
           ]);
@@ -179,10 +179,11 @@ class InvoiceCubit extends Cubit<InvoiceState> {
                   pw.Column(
                     crossAxisAlignment: pw.CrossAxisAlignment.start,
                     children: [
-                      // pw.Text(
-                      //     'Total Amount: ${totalAmountBeforeDiscount.toStringAsFixed(2)} EGP',
-                      //     style: pw.TextStyle(fontSize: 14, color: textColor)),
-                      pw.Text('Discount: $discountAmount EGP',
+                      pw.Text(
+                          'Total Amount: ${totalAmountBeforeDiscount.toStringAsFixed(2)} EGP',
+                          style: pw.TextStyle(fontSize: 14, color: textColor)),
+                      pw.Text(
+                          'Discount: ${discountAmount.toStringAsFixed(2)} EGP',
                           style: pw.TextStyle(fontSize: 14, color: textColor)),
                       pw.Text('Tax: ${tax.toStringAsFixed(2)} EGP',
                           style: pw.TextStyle(fontSize: 14, color: textColor)),
