@@ -3,11 +3,13 @@ class InvoiceModel {
   final String customerName;
   final String date;
   final String time;
+  final double discount;
   final double totalAmount;
   final String items;
   final String username;
 
   InvoiceModel({
+    required this.discount,
     required this.invoiceNumber,
     required this.customerName,
     required this.date,
@@ -19,6 +21,7 @@ class InvoiceModel {
 
   factory InvoiceModel.fromMap(Map<String, Object?> map) {
     return InvoiceModel(
+      discount: map['discount'] as  double,
       invoiceNumber: map['invoice_number'] as int,
       customerName: map['customer_name'] as String,
       date: map['date'] as String,
@@ -31,6 +34,7 @@ class InvoiceModel {
 
   Map<String, Object?> toMap() {
     return {
+      'discount': discount,
       'invoice_number': invoiceNumber,
       'customer_name': customerName,
       'date': date,

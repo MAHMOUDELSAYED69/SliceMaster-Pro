@@ -16,14 +16,14 @@ import '../widgets/custom_button.dart';
 import '../widgets/custom_text_field.dart';
 import '../widgets/icon_button_tooltip.dart';
 
-class PizzaManagmentScreen extends StatefulWidget {
-  const PizzaManagmentScreen({super.key});
+class PizzaManagementScreen extends StatefulWidget {
+  const PizzaManagementScreen({super.key});
 
   @override
-  State<PizzaManagmentScreen> createState() => _PizzaManagmentScreenState();
+  State<PizzaManagementScreen> createState() => _PizzaManagementScreenState();
 }
 
-class _PizzaManagmentScreenState extends State<PizzaManagmentScreen> {
+class _PizzaManagementScreenState extends State<PizzaManagementScreen> {
   File? _pickedImage;
   late GlobalKey<FormState> _addNewItemFormKey;
   late GlobalKey<FormState> _updatePriceFormKey;
@@ -329,11 +329,15 @@ class _PizzaManagmentScreenState extends State<PizzaManagmentScreen> {
                 ],
               ),
             ),
-            actions: <Widget>[
-              TextButton(
+            actions: [
+              ElevatedButton(
                 style: ButtonStyle(
+                  fixedSize:
+                      WidgetStatePropertyAll(Size(context.width * 0.09, 34.h)),
+                  backgroundColor:
+                      const WidgetStatePropertyAll(ColorManager.red),
                   overlayColor: WidgetStatePropertyAll(
-                      ColorManager.correct.withOpacity(0.3)),
+                      ColorManager.white.withOpacity(0.2)),
                 ),
                 onPressed: () {
                   Navigator.of(dialogContext).pop();
@@ -341,13 +345,17 @@ class _PizzaManagmentScreenState extends State<PizzaManagmentScreen> {
                 child: Text(
                   'Cancel',
                   style: context.textTheme.displayMedium
-                      ?.copyWith(color: ColorManager.correct),
+                      ?.copyWith(color: ColorManager.white),
                 ),
               ),
-              TextButton(
+              ElevatedButton(
                 style: ButtonStyle(
-                  overlayColor:
-                      WidgetStatePropertyAll(ColorManager.red.withOpacity(0.3)),
+                  fixedSize:
+                      WidgetStatePropertyAll(Size(context.width * 0.09, 34.h)),
+                  backgroundColor:
+                      const WidgetStatePropertyAll(ColorManager.correct),
+                  overlayColor: WidgetStatePropertyAll(
+                      ColorManager.white.withOpacity(0.2)),
                 ),
                 onPressed: () {
                   if (_updatePriceFormKey.currentState!.validate()) {
@@ -365,7 +373,7 @@ class _PizzaManagmentScreenState extends State<PizzaManagmentScreen> {
                 child: Text(
                   'Update',
                   style: context.textTheme.displayMedium
-                      ?.copyWith(color: ColorManager.red),
+                      ?.copyWith(color: ColorManager.white),
                 ),
               ),
             ],
@@ -389,23 +397,30 @@ class _PizzaManagmentScreenState extends State<PizzaManagmentScreen> {
             'Are you sure you want to remove this pizza?',
             style: context.textTheme.displayMedium,
           ),
-          actions: <Widget>[
-            TextButton(
+          actions: [
+            ElevatedButton(
               style: ButtonStyle(
-                overlayColor: WidgetStatePropertyAll(
-                    ColorManager.correct.withOpacity(0.3)),
+                fixedSize:
+                    WidgetStatePropertyAll(Size(context.width * 0.09, 34.h)),
+                backgroundColor:
+                    const WidgetStatePropertyAll(ColorManager.correct),
+                overlayColor:
+                    WidgetStatePropertyAll(ColorManager.white.withOpacity(0.2)),
               ),
               onPressed: () => Navigator.of(dialogContext).pop(),
               child: Text(
                 'Cancel',
                 style: context.textTheme.displayMedium
-                    ?.copyWith(color: ColorManager.correct),
+                    ?.copyWith(color: ColorManager.white),
               ),
             ),
-            TextButton(
+            ElevatedButton(
               style: ButtonStyle(
+                fixedSize:
+                    WidgetStatePropertyAll(Size(context.width * 0.09, 34.h)),
+                backgroundColor: const WidgetStatePropertyAll(ColorManager.red),
                 overlayColor:
-                    WidgetStatePropertyAll(ColorManager.red.withOpacity(0.3)),
+                    WidgetStatePropertyAll(ColorManager.white.withOpacity(0.2)),
               ),
               onPressed: () {
                 context
@@ -417,7 +432,7 @@ class _PizzaManagmentScreenState extends State<PizzaManagmentScreen> {
               child: Text(
                 'Remove',
                 style: context.textTheme.displayMedium
-                    ?.copyWith(color: ColorManager.red),
+                    ?.copyWith(color: ColorManager.white),
               ),
             ),
           ],
