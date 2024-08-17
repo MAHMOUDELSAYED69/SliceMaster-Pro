@@ -108,8 +108,11 @@ class _InvoiceCardState extends State<InvoiceCard> {
                               final totalPrice = price * count;
                               return TableRow(
                                 children: [
-                                  _invoiceText(
-                                      '${pizza.name} (${size.toString().split('.').last})'),
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: _invoiceText(
+                                        '(${size.toString().split('.').last.toUpperCase()}) ${pizza.name}'),
+                                  ),
                                   _invoiceText(count.toString()),
                                   _invoiceText(price.toStringAsFixed(2)),
                                   _invoiceText(totalPrice.toStringAsFixed(2)),

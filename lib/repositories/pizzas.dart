@@ -13,18 +13,7 @@ class PizzasRepository {
   final SqlDb _sqlDb = SqlDb();
 
   static List<PizzaModel> pizzaList = [
-    PizzaModel(
-        name: 'Mshakel Cheese',
-        smallPrice: 110,
-        mediumPrice: 150,
-        largePrice: 190,
-        image: ImageManager.cheeseloverPizza),
-    PizzaModel(
-        name: 'Neapolitan',
-        smallPrice: 40,
-        mediumPrice: 60,
-        largePrice: 80,
-        image: ImageManager.neapolitanPizza),
+    //! IF YOU WANT TO ADD NEW PIZZAS, ADD THEM HERE
   ];
 
   Future<List<PizzaModel>> getUserPizzas(String username) async {
@@ -78,20 +67,21 @@ class PizzasRepository {
         await _sqlDb.readData(data: data);
     return result?.map((e) => InvoiceModel.fromMap(e)).toList();
   }
-Future<void> saveInvoice({
-  required int invoiceNumber,
-  required String customerName,
-  required String formattedDate,
-  required String formattedTime,
-  required double totalAmount,
-  required num discount,
-  required String items,
-  required String userName,
-}) async {
-  final data = '''
+
+  Future<void> saveInvoice({
+    required int invoiceNumber,
+    required String customerName,
+    required String formattedDate,
+    required String formattedTime,
+    required double totalAmount,
+    required num discount,
+    required String items,
+    required String userName,
+  }) async {
+    final data = '''
   INSERT INTO invoices (invoice_number, customer_name, date, time, total_amount, discount, items, username)
   VALUES ($invoiceNumber, "$customerName", "$formattedDate", "$formattedTime", $totalAmount, $discount, "$items", "$userName")
   ''';
-  await _sqlDb.insertData(data: data);
-}
+    await _sqlDb.insertData(data: data);
+  }
 }
