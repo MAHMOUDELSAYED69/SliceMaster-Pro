@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:slice_master_pro/model/pizza.dart';
@@ -56,7 +55,6 @@ class CalculatorCubit extends Cubit<Map<PizzaModel, Map<PizzaSize, int>>> {
 
     if (discount != null && discount > 0) {
       final discountedTotal = total * ((100 - discount) / 100);
-         log(discountedTotal.toString());
       return discountedTotal;
     }
 

@@ -4,7 +4,6 @@ import 'package:slice_master_pro/repositories/pizzas.dart';
 
 import '../../utils/helpers/shared_pref.dart';
 
-
 class PizzasRepositoryCubit extends Cubit<List<PizzaModel>> {
   PizzasRepositoryCubit() : super([]) {
     loadUserPizzas();

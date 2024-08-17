@@ -86,7 +86,6 @@ class SqlDb {
 
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
     if (oldVersion < 2) {
-      // Other upgrade operations
       await db.execute('''
       ALTER TABLE invoices RENAME TO invoices_old;
     ''');

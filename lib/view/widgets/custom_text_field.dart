@@ -19,6 +19,7 @@ class MyTextFormField extends StatelessWidget {
     this.obscureText,
     this.initialValue,
     this.validateWithoutText,
+    this.onChanged,
   });
   final String? hintText;
   final String? label;
@@ -32,6 +33,7 @@ class MyTextFormField extends StatelessWidget {
   final bool? obscureText;
   final String? initialValue;
   final bool? validateWithoutText;
+  final void Function(String)? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -88,6 +90,7 @@ class MyTextFormField extends StatelessWidget {
                   },
           onFieldSubmitted: onFieldSubmitted,
           onSaved: onSaved,
+          onChanged: onChanged,
           decoration: InputDecoration(
             errorStyle: validateWithoutText == true
                 ? context.textTheme.displaySmall?.copyWith(fontSize: 0)

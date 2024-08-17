@@ -7,7 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:slice_master_pro/utils/constants/images.dart';
 import 'package:slice_master_pro/utils/constants/routes.dart';
 import 'package:slice_master_pro/utils/extentions/extentions.dart';
-import 'package:slice_master_pro/view/widgets/logout_widget.dart';
+import 'package:slice_master_pro/view/widgets/logout_button.dart';
 
 import '../../model/pizza.dart';
 import '../../utils/constants/colors.dart';
@@ -45,7 +45,7 @@ class HomeScreen extends StatelessWidget {
             iconData: Icons.inventory,
           ),
           SizedBox(width: 5.w),
-          const LogoutWidget(),
+          const LogoutButtton(),
           SizedBox(width: 5.w),
         ],
       ),
