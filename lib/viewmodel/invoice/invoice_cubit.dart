@@ -37,38 +37,42 @@ class InvoiceCubit extends Cubit<InvoiceState> {
         .then((value) => value.buffer.asUint8List());
 
     final List<List<String>> data = [];
-    num totalAmount = 0;
+    num tax = 0;
+    const double taxRate = 0.0;
+
+    num totalAmountBeforeDiscount = 0;
+
     pizzaCounts.forEach((pizza, sizeCounts) {
       sizeCounts.forEach((size, count) {
         if (count > 0) {
-          String pizzaSize = '';
+          String pizzaSize;
           num price;
           switch (size) {
             case PizzaSize.s:
+              pizzaSize = 'Small';
               price = pizza.smallPrice;
-              pizzaSize = 'S';
               break;
             case PizzaSize.m:
+              pizzaSize = 'Medium';
               price = pizza.mediumPrice;
-              pizzaSize = 'M';
               break;
             case PizzaSize.l:
+              pizzaSize = 'Large';
               price = pizza.largePrice;
-              pizzaSize = 'L';
               break;
             default:
-              price = pizza.mediumPrice;
-              break;
+              throw Exception('Unknown pizza size');
           }
 
           final total = price * count;
-          totalAmount += total;
+          totalAmountBeforeDiscount += total;
+          tax += total * taxRate;
 
           data.add([
             '${pizza.name} ($pizzaSize)',
             price.toStringAsFixed(2),
-            '0.00',
-            '0.00',
+            (taxRate * 100).toStringAsFixed(2),
+            discount?.toStringAsFixed(2) ?? '0.00',
             total.toStringAsFixed(2),
             count.toString(),
           ]);
@@ -76,8 +80,13 @@ class InvoiceCubit extends Cubit<InvoiceState> {
       });
     });
 
-    const tax = 0.00;
-    final grandTotal = totalAmount + tax;
+    num discountAmount = 0;
+    if (discount != null && discount > 0) {
+      discountAmount = totalAmountBeforeDiscount * (discount / 100);
+    }
+
+    final totalAmountAfterDiscount = totalAmountBeforeDiscount - discountAmount;
+    final grandTotal = totalAmountAfterDiscount + tax;
 
     final now = DateTime.now();
     final formattedDate = DateFormat('yyyy-MM-dd').format(now);
@@ -140,14 +149,15 @@ class InvoiceCubit extends Cubit<InvoiceState> {
                       fontWeight: pw.FontWeight.bold,
                       color: textColor)),
               pw.SizedBox(height: 5),
+              // ignore: deprecated_member_use
               pw.Table.fromTextArray(
                 context: context,
                 border: pw.TableBorder.all(color: textColor),
                 headers: <String>[
                   'Item',
-                  'Price (EGP)',
-                  'Tax (EGP)',
-                  'Discount (EGP)',
+                  'Price',
+                  'Tax (%)',
+                  'Discount (%)',
                   'Total (EGP)',
                   'Quantity'
                 ],
@@ -169,8 +179,10 @@ class InvoiceCubit extends Cubit<InvoiceState> {
                   pw.Column(
                     crossAxisAlignment: pw.CrossAxisAlignment.start,
                     children: [
-                      pw.Text(
-                          'Total Amount: ${totalAmount.toStringAsFixed(2)} EGP',
+                      // pw.Text(
+                      //     'Total Amount: ${totalAmountBeforeDiscount.toStringAsFixed(2)} EGP',
+                      //     style: pw.TextStyle(fontSize: 14, color: textColor)),
+                      pw.Text('Discount: $discountAmount EGP',
                           style: pw.TextStyle(fontSize: 14, color: textColor)),
                       pw.Text('Tax: ${tax.toStringAsFixed(2)} EGP',
                           style: pw.TextStyle(fontSize: 14, color: textColor)),
@@ -200,10 +212,10 @@ class InvoiceCubit extends Cubit<InvoiceState> {
           .expand((entry) => entry.value.entries
                   .where((sizeEntry) => sizeEntry.value > 0)
                   .map((sizeEntry) {
-                return '${entry.key.name} (${sizeEntry.key == PizzaSize.s ? 'Small' : sizeEntry.key == PizzaSize.m ? 'Medium' : sizeEntry.key == PizzaSize.m ? 'Large' : ''}) x${sizeEntry.value}';
+                return '${entry.key.name} (${sizeEntry.key == PizzaSize.s ? 'Small' : sizeEntry.key == PizzaSize.m ? 'Medium' : sizeEntry.key == PizzaSize.l ? 'Large' : ''}) x${sizeEntry.value}';
               }))
           .join(', '),
-      totalAmount: totalAmount.toDouble(),
+      totalAmount: totalAmountAfterDiscount.toDouble(),
       userName: CacheData.getData(key: 'currentUser'),
     );
 

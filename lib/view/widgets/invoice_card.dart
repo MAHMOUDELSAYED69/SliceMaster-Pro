@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -35,8 +33,12 @@ class _InvoiceCardState extends State<InvoiceCard> {
 
   @override
   Widget build(BuildContext context) {
-    final calculator = context.read<CalculatorCubit>();
-    final invoice = context.read<InvoiceCubit>();
+    final calculator = context.cubit<CalculatorCubit>();
+    final invoice = context.cubit<InvoiceCubit>();
+
+    _discountController.addListener(() {
+      setState(() {});
+    });
 
     return Container(
       margin: EdgeInsets.only(right: context.width * 0.04),
@@ -68,6 +70,16 @@ class _InvoiceCardState extends State<InvoiceCard> {
                           entry.value.values.any((count) => count > 0))
                       .toList();
 
+                  // Calculate totals based on the discount
+                  final discount = _discountController.text.isNotEmpty
+                      ? num.parse(_discountController.text)
+                      : 0;
+                  final totalPrice =
+                      calculator.getTotalPrice(discount: discount);
+                  final discountAmount =
+                      calculator.getTotalPrice(discount: 0) * (discount / 100);
+                  final grandTotal = totalPrice; // No tax included
+
                   return Column(
                     children: [
                       Table(
@@ -78,7 +90,7 @@ class _InvoiceCardState extends State<InvoiceCard> {
                               _invoiceText('Item'),
                               _invoiceText('Quantity'),
                               _invoiceText('Price'),
-                              _invoiceText('Total'),
+                              _invoiceText('Total (EGP)'),
                             ],
                           ),
                           // Table rows
@@ -110,12 +122,16 @@ class _InvoiceCardState extends State<InvoiceCard> {
                       SizedBox(height: 3.h),
                       Align(
                         alignment: Alignment.centerRight,
-                        child: _invoiceText(
-                          'Total Amount: ${calculator.getTotalPrice(
-                                discount: (_discountController.text.isNotEmpty)
-                                    ? num.parse(_discountController.text)
-                                    : 0,
-                              ).toStringAsFixed(2)} EGP',
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            _invoiceText(
+                                'Discount: ${discountAmount.toStringAsFixed(2)} EGP',
+                                4),
+                            _invoiceText(
+                                'Grand Total: ${grandTotal.toStringAsFixed(2)} EGP',
+                                4),
+                          ],
                         ),
                       ),
                       if (calculator.getTotalPrice() == 0.0)
@@ -147,6 +163,10 @@ class _InvoiceCardState extends State<InvoiceCard> {
                             child: MyTextFormField(
                               controller: _discountController,
                               hintText: 'Discount',
+                              keyboardType: TextInputType.number,
+                              onChanged: (value) {
+                                setState(() {});
+                              },
                             ),
                           ),
                         ],
@@ -164,7 +184,6 @@ class _InvoiceCardState extends State<InvoiceCard> {
                                 if (_discountController.text.isNotEmpty) {
                                   discount =
                                       num.parse(_discountController.text);
-                                      log(discount.toString());
                                 }
 
                                 invoice.generateInvoice(
@@ -201,9 +220,9 @@ class _InvoiceCardState extends State<InvoiceCard> {
     );
   }
 
-  Widget _invoiceText(String data) {
+  Widget _invoiceText(String data, [double padding = 8.0]) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(padding),
       child: Text(
         data,
         style: context.textTheme.displayMedium?.copyWith(

@@ -11,3 +11,9 @@ class ArchiveLoaded extends ArchiveState {
   final List<InvoiceModel> list;
   ArchiveLoaded({required this.list});
 }
+
+
+class ArchiveError extends ArchiveState {
+  final String message;
+  ArchiveError({required this.message});
+}
