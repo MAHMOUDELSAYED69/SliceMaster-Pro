@@ -1,4 +1,3 @@
-
 import 'package:bloc/bloc.dart';
 
 import 'package:meta/meta.dart';
@@ -22,5 +21,4 @@ class ArchiveCubit extends Cubit<ArchiveState> {
       emit(ArchiveError(message: e.toString()));
     }
   }
-
 }

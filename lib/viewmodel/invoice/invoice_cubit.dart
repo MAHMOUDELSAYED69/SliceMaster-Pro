@@ -5,12 +5,12 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:slice_master_pro/database/hive.dart';
 import 'package:slice_master_pro/model/pizza.dart';
 import 'package:slice_master_pro/repositories/pizzas.dart';
 import 'package:slice_master_pro/viewmodel/calc/calccubit_cubit.dart';
 import 'dart:typed_data';
 
-import '../../database/sql.dart';
 import '../../utils/constants/images.dart';
 import '../../utils/helpers/shared_pref.dart';
 
@@ -18,7 +18,7 @@ part 'invoice_state.dart';
 
 class InvoiceCubit extends Cubit<InvoiceState> {
   InvoiceCubit() : super(InvoiceInitial());
-  final SqlDb _sqlDb = SqlDb();
+  final HiveDb _hiveDb = HiveDb();
 
   Future<void> generateInvoice({
     required Map<PizzaModel, Map<PizzaSize, int>> pizzaCounts,
@@ -92,7 +92,7 @@ class InvoiceCubit extends Cubit<InvoiceState> {
     final formattedDate = DateFormat('yyyy-MM-dd').format(now);
     final formattedTime = DateFormat('HH:mm:ss').format(now);
 
-    int? invoiceNumber = await _sqlDb
+    int? invoiceNumber = await _hiveDb
         .getNextInvoiceNumber(CacheData.getData(key: 'currentUser'));
 
     if (invoiceNumber == null) {

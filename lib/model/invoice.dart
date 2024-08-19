@@ -3,7 +3,7 @@ class InvoiceModel {
   final String customerName;
   final String date;
   final String time;
-  final double discount;
+  final num discount;
   final double totalAmount;
   final String items;
   final String username;

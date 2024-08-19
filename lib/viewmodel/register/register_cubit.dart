@@ -1,27 +1,21 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
-import '../../database/sql.dart';
+import '../../database/hive.dart';
 
 part 'register_state.dart';
 
 class RegisterCubit extends Cubit<RegisterState> {
   RegisterCubit() : super(RegisterInitial());
-  final SqlDb _sqlDb = SqlDb();
-
+  final HiveDb _hiveDb = HiveDb();
   Future<void> register(String username, String password) async {
     try {
-      final existingUser = await _sqlDb.getUser(username, password);
-      if (existingUser != null) {
-        emit(UsernameTaken());
-        return;
-      }
+      final result = await _hiveDb.insertUser(username, password);
 
-      final userId = await _sqlDb.insertUser(username, password);
-      if (userId != null) {
-        emit(RegisterSuccess());
+      if (result == 0) {
+        emit(UsernameTaken());
       } else {
-        emit(RegisterFailure());
+        emit(RegisterSuccess());
       }
     } catch (_) {
       emit(RegisterFailure());

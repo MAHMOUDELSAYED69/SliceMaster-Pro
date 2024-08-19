@@ -4,8 +4,9 @@ import 'package:bloc/bloc.dart';
 import 'package:excel/excel.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:meta/meta.dart';
+import 'package:slice_master_pro/model/invoice.dart';
 
-import '../../model/invoice.dart';
+import '../../database/hive.dart';
 import '../../repositories/pizzas.dart';
 import '../../utils/helpers/shared_pref.dart';
 
@@ -24,13 +25,13 @@ class ExcelCubit extends Cubit<ExcelState> {
     final excel = Excel.createExcel();
     final sheet = excel['Sheet1'];
     sheet.setColumnWidth(0, 5); // .NO
-    sheet.setColumnWidth(1, 20);  // Customer Name
-    sheet.setColumnWidth(2, 15);  // Date
-    sheet.setColumnWidth(3, 15);  // Time
-    sheet.setColumnWidth(4, 13);  // Total Amount
-    sheet.setColumnWidth(5, 13);  // Discount
-    sheet.setColumnWidth(6, 100);  // Items
-    sheet.setColumnWidth(7, 20);  // Username
+    sheet.setColumnWidth(1, 20); // Customer Name
+    sheet.setColumnWidth(2, 15); // Date
+    sheet.setColumnWidth(3, 15); // Time
+    sheet.setColumnWidth(4, 13); // Total Amount
+    sheet.setColumnWidth(5, 13); // Discount
+    sheet.setColumnWidth(6, 100); // Items
+    sheet.setColumnWidth(7, 20); // Username
     const header = [
       TextCellValue('.NO'),
       TextCellValue('Customer Name'),
@@ -44,14 +45,14 @@ class ExcelCubit extends Cubit<ExcelState> {
 
     sheet.appendRow(header);
 
-    for (var invoice in invoices!) {
+    for (var invoice in invoices ?? []) {
       sheet.appendRow([
         IntCellValue(invoice.invoiceNumber),
         TextCellValue(invoice.customerName),
         TextCellValue(invoice.date),
         TextCellValue(invoice.time),
         DoubleCellValue(invoice.totalAmount),
-        DoubleCellValue(invoice.discount),
+        DoubleCellValue(invoice.discount.toDouble()),
         TextCellValue(invoice.items),
         TextCellValue(invoice.username),
       ]);
