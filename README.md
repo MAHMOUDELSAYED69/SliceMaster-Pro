@@ -1,5 +1,5 @@
 # SliceMaster Pro
-SliceMaster Pro is a feature-rich Flutter desktop application tailored for efficient pizza shop management. Whether handling routine operations or managing large orders, this tool offers seamless account management, pizza inventory control, secure invoice generation, and export capabilities. Designed with an intuitive, user-friendly interface, SliceMaster Pro ensures a smooth, productive experience for both shop owners and customers, enhancing operational efficiency and customer satisfaction.
+SliceMaster Pro is a feature-rich Flutter desktop application tailored for efficient pizza shop management. Leveraging Hive for local database management and Cubit for state management, Whether handling routine operations or managing large orders, this tool offers seamless account management, pizza inventory control, secure invoice generation, and export capabilities. Designed with an intuitive, user-friendly interface, SliceMaster Pro ensures a smooth, productive experience for both shop owners and customers, enhancing operational efficiency and customer satisfaction.
 
 
 ## Features
@@ -73,8 +73,8 @@ By following these steps, you'll have the SliceMaster Pro desktop app and runnin
 - **`flutter_bloc`**: ^8.1.6 - Flutter integration for the Bloc state management.
 
 #### Database Management:
-- **`sqflite`**: ^2.3.3+1 - SQLite database for local storage.
-- **`sqflite_common_ffi`**: ^2.3.3 - FFI for running SQLite on desktop platforms.
+- **`hive:`**: Lightweight NoSQL database for Flutter apps.
+- **`hive_flutter`**: Flutter integration for Hive database operations.
 
 #### Excel Handling:
 - **`excel`**: ^4.0.3 - Create, read, and modify Excel files.
@@ -103,6 +103,8 @@ By following these steps, you'll have the SliceMaster Pro desktop app and runnin
 - **`meta`**: ^1.12.0 - Provides annotations for Flutter code.
 
 #### Dev Dependencies:
+- **`hive_generator`**: Generates type adapters for Hive database.
+- **`build_runner`**: Automates code generation tasks in Flutter.
 - **`flutter_lints`**: ^3.0.0 - Standard lint rules for Flutter projects.
 - **`flutter_test`**: Included in Flutter SDK - Unit and widget testing framework.
 

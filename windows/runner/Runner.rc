@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "slice_master_pro" "\0"
+            VALUE "FileDescription", "SliceMaster Pro" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "slice_master_pro" "\0"
+            VALUE "InternalName", "SliceMaster Pro" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2024 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "slice_master_pro.exe" "\0"
-            VALUE "ProductName", "slice_master_pro" "\0"
+            VALUE "OriginalFilename", "SliceMaster Pro.exe" "\0"
+            VALUE "ProductName", "SliceMaster Pro" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
