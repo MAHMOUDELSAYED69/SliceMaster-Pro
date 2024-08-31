@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:slice_master_pro/database/hive.dart';
+import 'package:slice_master_pro/data/database/hive.dart';
 import 'package:window_manager/window_manager.dart';
 
-import 'app.dart';
+import 'app/app.dart';
 import 'utils/helpers/shared_pref.dart';
 
 Future<void> main() async {
