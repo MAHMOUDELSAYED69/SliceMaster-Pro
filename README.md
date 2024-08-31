@@ -69,43 +69,43 @@ By following these steps, you'll have the SliceMaster Pro desktop app and runnin
 ## Dependencies
 
 #### State Management:
-- **`bloc`**: ^8.1.4 - State management using the Bloc pattern.
-- **`flutter_bloc`**: ^8.1.6 - Flutter integration for the Bloc state management.
+- **`bloc`**: State management using the Bloc pattern.
+- **`flutter_bloc`**: Flutter integration for the Bloc state management.
 
 #### Database Management:
 - **`hive:`**: Lightweight NoSQL database for Flutter apps.
 - **`hive_flutter`**: Flutter integration for Hive database operations.
 
 #### Excel Handling:
-- **`excel`**: ^4.0.3 - Create, read, and modify Excel files.
+- **`excel`**: Create, read, and modify Excel files.
 
 #### File Management:
-- **`file_picker`**: ^8.0.6 - Pick files from the device storage.
-- **`path_provider`**: ^2.1.3 - Access commonly used directories on the device.
-- **`path`**: ^1.9.0 - Manipulate file paths in a platform-independent way.
+- **`file_picker`**: Pick files from the device storage.
+- **`path_provider`**: Access commonly used directories on the device.
+- **`path`**: Manipulate file paths in a platform-independent way.
 
 #### PDF and Printing:
-- **`pdf`**: ^3.11.0 - Create and manage PDF files.
-- **`printing`**: ^5.13.2 - Print documents and share PDFs.
+- **`pdf`**: Create and manage PDF files.
+- **`printing`**: Print documents and share PDFs.
 
 #### Localization:
-- **`intl`**: ^0.19.0 - Handle date, time formatting, and localization.
+- **`intl`**: Handle date, time formatting, and localization.
 
 #### UI and Icon Management:
-- **`flutter_screenutil`**: ^5.9.3 - Responsive UI design for multiple screen sizes.
-- **`flutter_svg`**: ^2.0.10+1 - Render SVG images in your Flutter app.
-- **`shared_preferences`**: ^2.2.3 - Store simple key-value pairs locally.
+- **`flutter_screenutil`**: Responsive UI design for multiple screen sizes.
+- **`flutter_svg`**: Render SVG images in your Flutter app.
+- **`shared_preferences`**: Store simple key-value pairs locally.
 
 #### Window Management:
-- **`window_manager`**: ^0.4.0 - Manage and customize desktop window behavior.
+- **`window_manager`**: Manage and customize desktop window behavior.
 
 #### Meta Information:
-- **`meta`**: ^1.12.0 - Provides annotations for Flutter code.
+- **`meta`**: Provides annotations for Flutter code.
 
 #### Dev Dependencies:
 - **`hive_generator`**: Generates type adapters for Hive database.
 - **`build_runner`**: Automates code generation tasks in Flutter.
-- **`flutter_lints`**: ^3.0.0 - Standard lint rules for Flutter projects.
+- **`flutter_lints`**: Standard lint rules for Flutter projects.
 - **`flutter_test`**: Included in Flutter SDK - Unit and widget testing framework.
 
 ## Usage
