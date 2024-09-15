@@ -10,28 +10,18 @@ SliceMaster Pro is a feature-rich Flutter desktop application tailored for effic
 - **`Intuitive Interface`**: A user-friendly interface ensures a smooth experience for both shop owners and customers.
 
 ## Screenshots
-<table>
-  <tr>
-    <td><img src="https://github.com/user-attachments/assets/ff40c9f7-1f34-4a96-8bb4-d3e496fdc471" alt="Screenshot 1" /></td>
-    <td><img src="https://github.com/user-attachments/assets/82a1ca76-75e9-4bf0-9ab2-df45886ced8f" alt="Screenshot 2" /></td>
-  </tr>
-  <tr>
-    <td><img src="https://github.com/user-attachments/assets/d078cf94-98e4-42e8-a0ff-a0effd7c502c" alt="Screenshot 3" /></td>
-    <td><img src="https://github.com/user-attachments/assets/71de4d4c-9d36-4aed-a742-79abda4ff76f" alt="Screenshot 4" /></td>
-  </tr>
-  <tr>
-    <td><img src="https://github.com/user-attachments/assets/1f0e68d1-12de-4b37-97be-94ebbedd5895" alt="Screenshot 5" /></td>
-    <td><img src="https://github.com/user-attachments/assets/00a67634-7165-4e18-884b-15019f149ad7" alt="Screenshot 6" /></td>
-  </tr>
-  <tr>
-    <td><img src="https://github.com/user-attachments/assets/d0b4edd8-f153-44c6-9aee-a6857a9c104a" alt="Screenshot 7" /></td>
-    <td><img src="https://github.com/user-attachments/assets/237549ab-30d6-4814-8201-c1d8903bd38e" alt="Screenshot 8" /></td>
-  </tr>
-  <tr>
-    <td><img src="https://github.com/user-attachments/assets/a180f534-6ad4-44f3-acb0-2118373a01b0" alt="Screenshot 9" /></td>
-    <td><img src="https://github.com/user-attachments/assets/01bbba54-7792-4361-940d-20425a137c61" alt="Screenshot 10" width="50%"/></td>
-  </tr>
-</table>
+<div style="display: flex; justify-content: space-between;">
+  <img src="https://github.com/user-attachments/assets/ff40c9f7-1f34-4a96-8bb4-d3e496fdc471" alt="Screenshot 1" style="width: 48%;"/>
+  <img src="https://github.com/user-attachments/assets/82a1ca76-75e9-4bf0-9ab2-df45886ced8f" alt="Screenshot 2" style="width: 48%;"/>
+  <img src="https://github.com/user-attachments/assets/d078cf94-98e4-42e8-a0ff-a0effd7c502c" alt="Screenshot 3" style="width: 48%;"/>
+  <img src="https://github.com/user-attachments/assets/71de4d4c-9d36-4aed-a742-79abda4ff76f" alt="Screenshot 4" style="width: 48%;"/>
+  <img src="https://github.com/user-attachments/assets/1f0e68d1-12de-4b37-97be-94ebbedd5895" alt="Screenshot 5" style="width: 48%;"/>
+  <img src="https://github.com/user-attachments/assets/00a67634-7165-4e18-884b-15019f149ad7" alt="Screenshot 6" style="width: 48%;"/>
+  <img src="https://github.com/user-attachments/assets/d0b4edd8-f153-44c6-9aee-a6857a9c104a" alt="Screenshot 7" style="width: 48%;"/>
+  <img src="https://github.com/user-attachments/assets/237549ab-30d6-4814-8201-c1d8903bd38e" alt="Screenshot 8" style="width: 48%;"/>
+  <img src="https://github.com/user-attachments/assets/a180f534-6ad4-44f3-acb0-2118373a01b0" alt="Screenshot 9" style="width: 48%;"/>
+  <img src="https://github.com/user-attachments/assets/01bbba54-7792-4361-940d-20425a137c61" alt="Screenshot 10" style="width: 22%;"/>
+</div>
 
 ## Installation
 
