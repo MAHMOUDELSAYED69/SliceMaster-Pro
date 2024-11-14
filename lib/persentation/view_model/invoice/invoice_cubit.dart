@@ -8,7 +8,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:slice_master_pro/data/database/hive.dart';
 import 'package:slice_master_pro/data/model/pizza.dart';
 import 'package:slice_master_pro/data/repositories/pizzas.dart';
-import 'package:slice_master_pro/persentation/viewmodel/calc/calccubit_cubit.dart';
+import 'package:slice_master_pro/persentation/view_model/calc/calccubit_cubit.dart';
 import 'dart:typed_data';
 
 import '../../../utils/constants/images.dart';

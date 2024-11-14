@@ -6,12 +6,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:slice_master_pro/data/model/pizza.dart';
 import 'package:slice_master_pro/utils/extentions/extentions.dart';
-import 'package:slice_master_pro/persentation/viewmodel/repository/pizza_cubit.dart';
+import 'package:slice_master_pro/persentation/view_model/repository/pizza_cubit.dart';
 
 import '../../utils/constants/colors.dart';
 import '../../utils/constants/images.dart';
 import '../../utils/helpers/my_snackbar.dart';
-import '../viewmodel/image/image_cubit.dart';
+import '../view_model/image/image_cubit.dart';
 import 'widgets/custom_button.dart';
 import 'widgets/custom_text_field.dart';
 import 'widgets/icon_button_tooltip.dart';

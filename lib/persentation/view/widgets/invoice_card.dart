@@ -4,12 +4,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:slice_master_pro/data/model/pizza.dart';
 import 'package:slice_master_pro/utils/extentions/extentions.dart';
-import 'package:slice_master_pro/persentation/screens/widgets/custom_button.dart';
+import 'package:slice_master_pro/persentation/view/widgets/custom_button.dart';
 
 import '../../../utils/constants/colors.dart';
 import '../../../utils/constants/images.dart';
-import '../../viewmodel/calc/calccubit_cubit.dart';
-import '../../viewmodel/invoice/invoice_cubit.dart';
+import '../../view_model/calc/calccubit_cubit.dart';
+import '../../view_model/invoice/invoice_cubit.dart';
 import 'custom_text_field.dart';
 
 class InvoiceCard extends StatefulWidget {

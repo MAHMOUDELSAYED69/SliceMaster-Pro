@@ -10,7 +10,9 @@ class PizzasRepository {
       PizzasRepository._privateConstructor();
 
   static List<PizzaModel> pizzaList = [
-    //! IF YOU WANT TO ADD NEW PIZZAS, ADD THEM HERE
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //! IF YOU WANT TO ADD NEW PIZZAS, ADD THEM HERE !!
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   ];
 
   Future<List<PizzaModel>> getUserPizzas(String username) async {
@@ -43,23 +45,23 @@ class PizzasRepository {
   }
 
   Future<void> removeUserPizza(String username, String pizzaName) async {
-    final pizzasBox = Hive.box<Pizza?>('pizzas');
+    final pizzasBox = Hive.box<Pizza>('pizzas');
     final pizzaToRemove = pizzasBox.values.firstWhere(
-        (pizza) => pizza?.username == username && pizza?.name == pizzaName,
-        orElse: () => null);
-    await pizzaToRemove?.delete();
+        (pizza) => pizza.username == username && pizza.name == pizzaName,
+        orElse: () => Pizza());
+    await pizzaToRemove.delete();
   }
 
   Future<void> updatePizzaPrice(String username, String pizzaName,
       num newSmallPrice, num newMediumPrice, num newLargePrice) async {
-    final pizzasBox = Hive.box<Pizza?>('pizzas');
+    final pizzasBox = Hive.box<Pizza>('pizzas');
     final pizzaToUpdate = pizzasBox.values.firstWhere(
-        (pizza) => pizza?.username == username && pizza?.name == pizzaName,
-        orElse: () => null);
-    pizzaToUpdate?.smallPrice = newSmallPrice;
-    pizzaToUpdate?.mediumPrice = newMediumPrice;
-    pizzaToUpdate?.largePrice = newLargePrice;
-    await pizzaToUpdate?.save();
+        (pizza) => pizza.username == username && pizza.name == pizzaName,
+        orElse: () => Pizza());
+    pizzaToUpdate.smallPrice = newSmallPrice;
+    pizzaToUpdate.mediumPrice = newMediumPrice;
+    pizzaToUpdate.largePrice = newLargePrice;
+    await pizzaToUpdate.save();
   }
 
   Future<List<InvoiceModel>?> getInvoices(String username) async {

@@ -54,7 +54,7 @@ class PizzasRepositoryCubit extends Cubit<List<PizzaModel>> {
       newMediumPrice,
       newLargePrice,
     );
-    await loadUserPizzas();
+    await loadUserPizzas(); 
   }
 
   Future<String> _getUsername() async {

@@ -4,7 +4,7 @@ import 'package:slice_master_pro/utils/extentions/extentions.dart';
 
 import '../../../data/model/pizza.dart';
 import '../../../utils/constants/colors.dart';
-import '../../viewmodel/calc/calccubit_cubit.dart';
+import '../../view_model/calc/calccubit_cubit.dart';
 
 class ActionCard extends StatefulWidget {
   const ActionCard({
@@ -76,6 +76,7 @@ class _ActionCardState extends State<ActionCard> {
                 setState(() {
                   _selectedSize = value;
                 });
+                
               },
             ),
           ],

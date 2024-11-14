@@ -4,11 +4,11 @@ import 'package:slice_master_pro/utils/extentions/extentions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:slice_master_pro/persentation/viewmodel/excel/excel_cubit.dart';
+import 'package:slice_master_pro/persentation/view_model/excel/excel_cubit.dart';
 
 import '../../utils/constants/images.dart';
 import '../../utils/helpers/my_snackbar.dart';
-import '../viewmodel/archive/archive_cubit.dart';
+import '../view_model/archive/archive_cubit.dart';
 import 'widgets/icon_button_tooltip.dart';
 
 class ArchiveScreen extends StatelessWidget {

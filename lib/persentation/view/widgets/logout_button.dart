@@ -6,7 +6,7 @@ import 'package:slice_master_pro/utils/extentions/extentions.dart';
 import '../../../utils/constants/colors.dart';
 import '../../../utils/constants/routes.dart';
 import '../../../utils/helpers/my_snackbar.dart';
-import '../../viewmodel/logout/logout_cubit.dart';
+import '../../view_model/logout/logout_cubit.dart';
 
 class LogoutButtton extends StatelessWidget {
   const LogoutButtton({

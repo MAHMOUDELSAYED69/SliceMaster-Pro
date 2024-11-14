@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:slice_master_pro/utils/extentions/extentions.dart';
 
 import '../../../utils/constants/colors.dart';
-import '../../viewmodel/calc/calccubit_cubit.dart';
+import '../../view_model/calc/calccubit_cubit.dart';
 
 class ItemCard extends StatelessWidget {
   const ItemCard({

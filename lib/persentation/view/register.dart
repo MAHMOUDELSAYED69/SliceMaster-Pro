@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:slice_master_pro/utils/extentions/extentions.dart';
-import 'package:slice_master_pro/persentation/screens/widgets/custom_button.dart';
-import 'package:slice_master_pro/persentation/screens/widgets/custom_text_field.dart';
+import 'package:slice_master_pro/persentation/view/widgets/custom_button.dart';
+import 'package:slice_master_pro/persentation/view/widgets/custom_text_field.dart';
 
 import '../../utils/helpers/my_snackbar.dart';
-import '../viewmodel/register/register_cubit.dart';
+import '../view_model/register/register_cubit.dart';
 import 'widgets/auth_background.dart';
 import 'widgets/text_and_btn.dart';
 import 'widgets/auth_headline.dart';

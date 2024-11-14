@@ -5,7 +5,7 @@ import 'package:slice_master_pro/utils/extentions/extentions.dart';
 
 import '../../utils/constants/images.dart';
 import '../../utils/constants/routes.dart';
-import '../viewmodel/logout/logout_cubit.dart';
+import '../view_model/logout/logout_cubit.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

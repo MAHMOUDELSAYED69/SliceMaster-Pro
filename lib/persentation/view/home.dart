@@ -7,12 +7,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:slice_master_pro/utils/constants/images.dart';
 import 'package:slice_master_pro/utils/constants/routes.dart';
 import 'package:slice_master_pro/utils/extentions/extentions.dart';
-import 'package:slice_master_pro/persentation/screens/widgets/logout_button.dart';
+import 'package:slice_master_pro/persentation/view/widgets/logout_button.dart';
 
 import '../../data/model/pizza.dart';
 import '../../utils/constants/colors.dart';
-import '../viewmodel/calc/calccubit_cubit.dart';
-import '../viewmodel/repository/pizza_cubit.dart';
+import '../view_model/calc/calccubit_cubit.dart';
+import '../view_model/repository/pizza_cubit.dart';
 import 'widgets/action_card.dart';
 import 'widgets/icon_button_tooltip.dart';
 import 'widgets/invoice_card.dart';

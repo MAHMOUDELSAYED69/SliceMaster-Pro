@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:slice_master_pro/persentation/screens/home.dart';
-import 'package:slice_master_pro/persentation/screens/pizza_management.dart';
-import 'package:slice_master_pro/persentation/viewmodel/excel/excel_cubit.dart';
-import 'package:slice_master_pro/persentation/viewmodel/repository/pizza_cubit.dart';
+import 'package:slice_master_pro/persentation/view/home.dart';
+import 'package:slice_master_pro/persentation/view/pizza_management.dart';
+import 'package:slice_master_pro/persentation/view_model/excel/excel_cubit.dart';
+import 'package:slice_master_pro/persentation/view_model/repository/pizza_cubit.dart';
 
 import '../../utils/constants/routes.dart';
-import '../../persentation/screens/archive.dart';
-import '../../persentation/screens/login.dart';
-import '../../persentation/screens/register.dart';
-import '../../persentation/screens/splash.dart';
-import '../../persentation/viewmodel/archive/archive_cubit.dart';
-import '../../persentation/viewmodel/calc/calccubit_cubit.dart';
-import '../../persentation/viewmodel/image/image_cubit.dart';
-import '../../persentation/viewmodel/invoice/invoice_cubit.dart';
-import '../../persentation/viewmodel/login/login_cubit.dart';
-import '../../persentation/viewmodel/logout/logout_cubit.dart';
-import '../../persentation/viewmodel/register/register_cubit.dart';
+import '../../persentation/view/archive.dart';
+import '../../persentation/view/login.dart';
+import '../../persentation/view/register.dart';
+import '../../persentation/view/splash.dart';
+import '../../persentation/view_model/archive/archive_cubit.dart';
+import '../../persentation/view_model/calc/calccubit_cubit.dart';
+import '../../persentation/view_model/image/image_cubit.dart';
+import '../../persentation/view_model/invoice/invoice_cubit.dart';
+import '../../persentation/view_model/login/login_cubit.dart';
+import '../../persentation/view_model/logout/logout_cubit.dart';
+import '../../persentation/view_model/register/register_cubit.dart';
 import 'page_transition.dart';
 
 abstract class AppRouter {
